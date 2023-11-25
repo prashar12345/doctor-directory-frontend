@@ -1,0 +1,333 @@
+<h1 class="section-header">
+    Profile
+</h1>
+
+<div class="WrapperCard">
+    <form class="form-row viewForm" [formGroup]="Form" (ngSubmit)="onSubmit()" [ngClass]="{'isView': !isEdit}">
+
+        <div class="col-md-12 text-center mb-3">
+            <div class="text-right">
+                <button class="btn btn-primary" type="button"
+                    (click)="isEdit = !isEdit">{{isEdit?'View':'Edit'}}</button>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">First Name</label>
+
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.firstName}}</p>
+
+            <input *ngIf="isEdit" type="text" formControlName="firstName" class="form-control" maxlength="20"
+                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                <div *ngIf="f.firstName.errors.pattern">First Name is Invalid</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Last Name</label>
+
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.lastName}}</p>
+            <input *ngIf="isEdit" type="text" formControlName="lastName" class="form-control" maxlength="20"
+                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                <div *ngIf="f.lastName.errors.pattern">Last Name is Invalid</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+
+            <label for="nf-name" class="isRequired">Gender</label>
+            <section>
+
+                <p class="text" *ngIf="!isEdit">{{Form?.value?.gender | titlecase}}</p>
+                <label class="radio_input" *ngIf="isEdit">
+                    <input type="radio" name="gender" value="male" formControlName="gender" />
+                    Male
+                </label>
+
+                <label class="radio_input" *ngIf="isEdit">
+                    <input type="radio" name="gender" value="female" formControlName="gender" />
+                    Female
+                </label>
+
+
+                <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                    <div *ngIf="f.gender.errors.required">Gender is required</div>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Email</label>
+            <p class="text">{{Form?.value?.email}}</p>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Phone Number</label>
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.mobileNo}}</p>
+
+            <input type="number" *ngIf="isEdit" formControlName="mobileNo" class="form-control" maxlength="12"
+            oninput="javascript: isNumber(this);"
+                [ngClass]="{ 'is-invalid': submitted && f.mobileNo.errors }">
+
+            <div *ngIf="submitted && f.mobileNo.errors" class="invalid-feedback">
+                <div *ngIf="f.mobileNo.errors.required">Phone Number is required</div>
+                <div *ngIf="f.mobileNo.errors.min">Minimum 10 digits required</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group  has-required">
+                <label for="nf-name" class="isRequired">Address</label>
+                <section>
+                    <input *ngIf="isEdit" ngx-google-places-autocomplete autocomplete="off" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.address.errors }" formControlName="address"
+                        #placesRef="ngx-places" (change)="addressCheck()" (onAddressChange)="handleAddressChange($event)" required="" />
+                    <p class="text" *ngIf="!isEdit">{{Form?.value?.address}}</p>
+                    <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                        <div *ngIf="f.address.errors.required">Address is required</div>
+                    </div>
+
+                    <div *ngIf="submitted && !isAddressSelected && Form.value.address" class="invalid-feedback">
+                        Please select Address from Dropdown
+                      </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group  has-required">
+                <label for="nf-name" class="isRequired">Visit Type</label>
+                <section>
+                    <p class="text" *ngIf="!isEdit">{{Form?.value?.visitType}}</p>
+                    <select *ngIf="isEdit" class="form-control" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.visitType.errors }" formControlName="visitType"
+                        required="">
+                        <option value="">Select Value</option>
+                        <option>In-person</option>
+                        <option>Virtual</option>
+                        <option>Both</option>
+                    </select>
+                    <div *ngIf="submitted && f.visitType.errors" class="invalid-feedback">
+                        <div *ngIf="f.visitType.errors.required">Visit Type is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="nf-name" class="isRequired">Languages</label>
+                <section>
+                    <ss-multiselect-dropdown *ngIf="isEdit" [options]="myOptions" [settings]="mySettings"
+                        formControlName="languages"></ss-multiselect-dropdown>
+
+                    <div class="mt-2">
+                        <span class="badge badge-primary m-1" *ngFor="let item of Form.value.languages">{{item}}</span>
+                    </div>
+
+                    <div *ngIf="submitted && f.languages.errors" class="invalid-feedback">
+                        <div *ngIf="f.languages.errors.required">Language is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group  has-required">
+                <label for="nf-name" class="isRequired">NPI Number</label>
+                <section>
+                    <p class="text" *ngIf="!isEdit">{{Form?.value?.npi}}</p>
+                    <input type="number" *ngIf="isEdit" autocomplete="off" placeholder="" formControlName="npi"
+                        class="form-control" maxlength="12"
+                        oninput="javascript: isNumber(this);"
+                        [ngClass]="{ 'is-invalid': submitted && f.npi.errors }" required="" />
+
+
+                    <div *ngIf="submitted && f.npi.errors" class="invalid-feedback">
+                        <div *ngIf="f.npi.errors.required">NPI Number is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <label for="nf-name">Are you a Individual Doctor</label>
+            <section>
+                <p class="text" *ngIf="!isEdit">{{Form?.value?.individualType?'Yes':'No'}}</p>
+                <div class="button-cover" *ngIf="isEdit">
+                    <div class="button r" id="button-1">
+                        <input type="checkbox" formControlName="individualType" (change)="areIndividual()"
+                            class="checkbox" />
+                        <div class="knobs"></div>
+                        <div class="layer"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-sm-6" *ngIf="!Form.value.individualType">
+            <div class="form-group  has-required">
+                <label for="nf-name" class="isRequired">Hospital</label>
+                <section>
+                    <p class="text" *ngIf="!isEdit">{{data?.hospitalName}}</p>
+
+                    <select class="form-control" *ngIf="isEdit" formControlName="hospitalId"
+                        [ngClass]="{ 'is-invalid': submitted && f.hospitalId.errors }">
+                        <option value="" disabled>Select Option</option>
+                        <option *ngFor="let item of hospitals" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+
+                    <div *ngIf="submitted && f.hospitalId.errors" class="invalid-feedback">
+                        <div *ngIf="f.hospitalId.errors.required">Hospital is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="nf-name" class="isRequired">Insurances</label>
+                <section>
+                    <ss-multiselect-dropdown *ngIf="isEdit" [options]="myInsurances" [settings]="mySettings"
+                        formControlName="insurances"></ss-multiselect-dropdown>
+
+                    <div class="mt-2">
+                        <span class="badge badge-primary m-1"
+                            *ngFor="let item of Form.value.insurances">{{getSingleInsurance(item)}}</span>
+                    </div>
+
+                    <div *ngIf="submitted && f.insurances.errors" class="invalid-feedback">
+                        <div *ngIf="f.insurances.errors.required">Insurances is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="nf-name" class="isRequired">Specialties</label>
+                <section>
+                    <ss-multiselect-dropdown *ngIf="isEdit" [options]="mySpecialties" [settings]="mySettings"
+                        formControlName="specialties"></ss-multiselect-dropdown>
+
+                    <div class="mt-2">
+                        <span class="badge badge-primary m-1"
+                            *ngFor="let item of Form.value.specialties">{{getSingleSpecialty(item)}}</span>
+                    </div>
+
+                    <div *ngIf="submitted && f.specialties.errors" class="invalid-feedback">
+                        <div *ngIf="f.specialties.errors.required">Specialties is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="nf-name" class="isRequired">Services</label>
+                <section>
+                    <ss-multiselect-dropdown *ngIf="isEdit" [options]="myServices" [settings]="mySettings"
+                        formControlName="services"></ss-multiselect-dropdown>
+
+                    <div class="mt-2">
+                        <span class="badge badge-primary m-1"
+                            *ngFor="let item of Form.value.services">{{getSingleSpecialty(item)}}</span>
+                    </div>
+
+                    <div *ngIf="submitted && f.services.errors" class="invalid-feedback">
+                        <div *ngIf="f.services.errors.required">Services is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Year of Experience</label>
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.experience}}</p>
+            <input *ngIf="isEdit" type="number" formControlName="experience" class="form-control"
+            maxlength="2"
+            oninput="javascript: isNumber(this);"
+            [ngClass]="{ 'is-invalid': submitted && f.experience.errors }">
+
+            <div *ngIf="submitted && f.experience.errors" class="invalid-feedback">
+                <div *ngIf="f.experience.errors.required">Experience is required</div>
+                <div *ngIf="f.experience.errors.max">Maximum Experience is 50</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Education</label>
+
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.education}}</p>
+            <input *ngIf="isEdit" type="text" formControlName="education" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.education.errors }">
+
+            <div *ngIf="submitted && f.education.errors" class="invalid-feedback">
+                <div *ngIf="f.education.errors.required">Education is required</div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Qualification</label>
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.qualification}}</p>
+            <input *ngIf="isEdit" type="text" formControlName="qualification" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.qualification.errors }">
+
+            <div *ngIf="submitted && f.qualification.errors" class="invalid-feedback">
+                <div *ngIf="f.qualification.errors.required">Qualification is required</div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group  has-required">
+                <label for="nf-name" class="isRequired">About Us</label>
+                <section>
+                    <textarea class="form-control" *ngIf="isEdit" formControlName="aboutus" required=""></textarea>
+                    <p class="text" *ngIf="!isEdit">{{Form?.value?.aboutus}}</p>
+                    <div *ngIf="submitted && f.aboutus.errors" class="invalid-feedback">
+                        <div *ngIf="f.aboutus.errors.required">About Us is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group  has-required">
+                <label for="nf-name" class="isRequired">Images</label>
+                <section>
+                    <input id="Image" type="file" [(ngModel)]="imageBase" [ngModelOptions]="{standalone: true}"
+                        (change)="uploadImage($event.target.files)"
+                        accept="image/jpg, image/jpeg, image/png,.png,.jpg,.jpeg" multiple class="d-none">
+
+                    <label for="Image" class="btn btn-primary" *ngIf="isEdit">Upload Image</label>
+
+                    <div class="" *ngIf="Form?.value?.image">
+                        <div class="thumbImg" *ngFor="let item of Form?.value?.image; let i = index">
+                            <img src="{{_host}}{{item}}" alt="">
+                            <i class="fa fa-times" *ngIf="isEdit" (click)="removeImage(i)"></i>
+                        </div>
+                    </div>
+
+                    <div *ngIf="submitted && f.image.errors && isEdit" class="invalid-feedback">
+                        <div *ngIf="f.image.errors.required">Image is required</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-md-12 text-right" *ngIf="isEdit">
+            <button type="submit" class="btn btn-secondary">Save</button>
+        </div>
+
+    </form>
+</div>

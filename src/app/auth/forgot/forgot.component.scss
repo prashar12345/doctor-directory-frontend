@@ -1,0 +1,133 @@
+@import "../../../assets/scss/mixin";
+body {
+  background-color: rgb(228, 229, 247);
+}
+.social-login img {
+  width: 24px;
+}
+.ptCls{
+  padding-top:8rem !important; 
+}
+p.subtitle {
+  font-size: 20px;
+  line-height: 28px;
+}
+h2.title {
+  font-size: 56px;
+}
+a {
+  text-decoration: none;
+}
+
+.card {
+  padding: 1.8rem;
+  background: whitesmoke;
+  border: none;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.subtitle {
+  font-weight: 500;
+}
+.btn-text {
+  margin: 0;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.google-btn {
+  background: #fff;
+  border: solid 2px rgb(245 239 239);
+  border-radius: 8px;
+  font-weight: bold;
+  display: flex;
+  padding: 10px 10px;
+  flex: auto;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+}
+.fb-btn {
+  background: #fff;
+  border: solid 2px rgb(69, 69, 185);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.or {
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 2px solid rgb(245 239 239);
+  line-height: 0.1em;
+  margin: 25px 0;
+}
+.or span {
+  background: #fff;
+  padding: 0 10px;
+}
+
+.email-login {
+  display: flex;
+  flex-direction: column;
+}
+.email-login label {
+  color: rgb(170 166 166);
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 23px 20px;
+  border-radius: 0;
+  box-sizing: border-box;
+  border-color: #908f8f #b1b0b0 #c1c0c0;
+  box-shadow: inset 0 2px 3px rgb(0 0 0 / 15%);
+}
+
+.cta-btn {
+  background-color: #ee3c80;
+  color: white;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  width: fit-content;
+  border-radius: 0;
+  border: none;
+  margin-top: 25px;
+}
+
+.forget-pass {
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+
+  main {
+    background: #fff;
+    position: absolute;
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+}
+
+.loginWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.backbtn{
+  cursor: pointer;
+  font-size: 24px;
+  display: inline-block;
+}

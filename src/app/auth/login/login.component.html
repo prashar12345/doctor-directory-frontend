@@ -1,0 +1,52 @@
+<ngx-spinner bdColor="#fff" size="" color="#fff">
+    <img src="assets/img/loader.gif" class="loaderLogo" width="100" />
+</ngx-spinner>
+
+
+<div class="loginWrapper">
+<div class="card">
+  <form [formGroup]="adminLoginForm" (ngSubmit)="onSubmit()">
+    <!-- <div class="text-right">
+      <i class="fa fa-arrow-left backbtn" routerLink="/"></i>
+    </div> -->
+     <!-- <h2 class="title"> Log in</h2> -->
+     <p class="subtitle"><a (click)="signup()" style="cursor: pointer;" class="text-white">Sign up with email</a></p>
+
+     <!-- <div class="social-login">
+        <button class="google-btn">
+           <img alt="Google" src="assets/img/login1.svg" />
+           <p class="btn-text">Sign in with Google</p>
+        </button>
+        <button class="fb-btn">
+        <img alt="FB" src="assets/img/login2.svg" />
+        </button>        
+     </div> -->
+
+     <p class="or"><span>or</span></p>
+     <p class="fs-size">Log in with email</p>
+     <div class="email-login">
+        <!-- <label for="email"> <b>Email</b></label> -->
+        <input type="email" placeholder="Enter Email" formControlName="email"
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.email || f.email.errors.pattern">Please Enter Valid Email</div>
+        </div>
+        <!-- <label for="psw" class="mt-3"><b>Password</b></label> -->
+        <input class="mt-3" type="password" placeholder="Enter Password" formControlName="password"
+        [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+     </div>
+     <div class="form-group form-check mt-3">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox"> Keep me logged in
+      </label>
+    </div>
+     <button class="cta-btn btn btn-primary">Log In</button>
+     <a class="forget-pass" (click)="forgot()">Forgot Your Password?</a>
+  </form>
+</div>
+</div>

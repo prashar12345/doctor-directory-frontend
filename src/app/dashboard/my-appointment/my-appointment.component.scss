@@ -1,0 +1,24 @@
+.viewlink{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.reviewArticle{
+    display: flex;
+    align-items: center;
+    background-color: #f3f3f3;
+    padding-left: 10px;
+    > label{
+        margin-bottom: 0;
+        font-weight: 700;
+        margin-bottom: 0;
+        min-width: 104px;
+    }
+}
+
+td{
+    .btn{
+        width: 110px;
+        padding: 6px 10px;
+    }
+}

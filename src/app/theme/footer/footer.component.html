@@ -1,0 +1,44 @@
+<footer class="mainFooter">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="/assets/img/logo.png" routerLink="/" alt="" class="footerlogo cursor-pointer" />
+                <p>Company Intro: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquam tellus lobortis mo</p>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h5>Website</h5>
+                        <article class="footerLinks">
+                            <a routerLink="/page/news" routerLinkActive='active'>News</a>
+                            <a routerLink="/page/about" routerLinkActive='active'>About Us</a>
+                            <a routerLink="/page/privacy" routerLinkActive='active'>Privacy Policy</a>
+                            <a routerLink="/page/terms" routerLinkActive='active'>Terms & Conditions</a>
+                        </article>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5>Top specialties</h5>
+                        <article class="footerLinks">
+                            
+                            <a *ngFor="let item of specialties" routerLink="/page/search" [queryParams]="{specialties: item.id}" routerLinkActive='active' (click)="viewSpacialty(item.id)">{{item.name}}</a>
+                        </article>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5>Cities</h5>
+                        <article class="footerLinks">
+                            <a>News</a>
+                            <a>News</a>
+                            <a>News</a>
+                            <a>News</a>
+                            <a>News</a>
+                            <a>News</a>
+                            <a>News</a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="mb-0">Disclaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquam tellus lobortis mo</p>
+    </div>
+</footer>

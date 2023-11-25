@@ -1,0 +1,26 @@
+@import "../../../assets/scss/mixin";
+
+.footerlogo{
+    max-width: 98px;
+    margin-bottom: 14px;
+}
+
+.mainFooter{
+    background-color: #f2f2f3;
+    padding: 20px 0;
+}
+
+.footerLinks{
+    > a{
+        display: block;
+        padding: 3px 0;
+        font-weight: 400;
+        line-height: normal;
+        color: $textColor;
+        cursor: pointer;
+
+        &:hover, &.active{
+            color: $primaryColor;
+        }
+    }
+}

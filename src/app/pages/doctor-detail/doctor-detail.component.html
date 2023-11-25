@@ -1,0 +1,372 @@
+<div scrollSpy [spiedTags]="['DIV']" (sectionChange)="onSectionChange($event)">
+    <div class="container">
+
+    <div class="form-row">
+        <div class="col-md-7 leftSideBar">
+            <article class="doctorDiv mb-3 mt-5">
+                <div class="dImage">
+                    <img src="{{data?.image?_host+data?.image[0]:dImg}}" />
+                    <a class="imagesLink" *ngIf="data?.image"
+                        (click)="openImage()">{{data?.image?data?.image.length:'0'}} Photos</a>
+                </div>
+                <div class="content">
+                    <h4 class="mb-2">Dr. {{data?.fullName | titlecase}} </h4>
+                    <div class="specialtyTop">
+                        <span *ngFor="let item of data?.specialties; let i = index">
+                            {{item.name}} {{data?.specialties?.length == (i+1)?'':' ,'}}
+                        </span>
+
+                    </div>
+                    <p class="address mb-2">{{data?.address}}</p>
+                    <div>
+                        <span class="dBadge" *ngIf="data?.visitType == 'Both' || data?.visitType == 'In-person'">
+                            <i class="fa fa-user"></i> In-person
+                        </span>
+                        <span class="dBadge" *ngIf="data?.visitType == 'Both' || data?.visitType == 'Virtual'">
+                            <i class="fa fa-video"></i> Virtual
+                        </span>
+                    </div>
+
+                </div>
+            </article>
+            <section class="sticky stickyMenu">
+                <div class="sticky-header mb-3">
+                    <span (click)="scrollTo('aboutSection')" [ngClass]="{'active': currentSection == 'aboutSection'}"><a>About</a></span>
+                    <span (click)="scrollTo('insuranceSection')" [ngClass]="{'active': currentSection == 'insuranceSection'}"><a>Insurances</a></span>
+                    <span (click)="scrollTo('locationSection')" [ngClass]="{'active': currentSection == 'locationSection'}"><a>Locations</a></span>
+                    <span (click)="scrollTo('reviewSection')" [ngClass]="{'active': currentSection == 'reviewSection'}"><a>Reviews</a></span>
+                </div>
+            </section>
+            <div class="row reviewRow">
+                <div class="col-md-3 text-center border-right">
+                    <h4>Overall rating</h4>
+                    <h2>{{data?.review_avrage}}</h2>
+                    <a>{{data?.reviews}} Reviews</a>
+                </div>
+                <div class="col-md-9">
+                    <h4 class="mb-3">Recent reviews</h4>
+
+                    <article class="reviewBox" *ngFor="let item of recentReview">
+                        <p class="mb-2">{{item?.review}}</p>
+                        <div class="meta">
+                            <span>{{item?.fullName}}</span>
+                            <span>{{item?.createdAt | date}}</span>
+                        </div>
+                    </article>
+                    <button class="btn btn-outline-secondary rounded-0" (click)="scrollTo('reviewSection')">Read More
+                        Reviews</button>
+                </div>
+            </div>
+
+            <hr class="mb-0" />
+
+            <h5 class="mb-3" id="aboutSection">About Dr. {{data?.fullName}}</h5>
+            <p class="mb-0">{{data?.aboutus}}</p>
+
+            <h5 class="mb-3" id="insuranceSection">In-network insurances</h5>
+            <article class="insuranceList form-row mb-3">
+                <div class="col-md-4 p-2" *ngFor="let item of data?.insuranceName">
+                    <div class="insuranceItem">
+                        <img src="{{item?.image?_host+item?.image:dImg}}" />
+                        <h4>{{item.name}}</h4>
+                    </div>
+                </div>
+            </article>
+
+            <h5 class="mb-3" id="locationSection">Office location</h5>
+            <article class="locationArticle form-row">
+                <div class="col-md-8">
+                    <div class="map-responsive w-100" style="height: 300px;">
+                        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
+                            <agm-marker *ngFor="let data of markers; let i = index" [latitude]="data.lat"
+                                [longitude]="data.lng">
+                            </agm-marker>
+                        </agm-map>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <h4 class="contact-detail mb-2">Dr. {{data?.fullName | titlecase}}</h4>
+                    <p class="contact-detail-address mb-2">{{data?.address}}</p>
+                    <!-- <a class="text-primary">Get Direction</a> -->
+                    <!-- <a href="https://www.google.com/maps/dir/?api=1&origin={{latLng}}&destination={{object?.address}} {{object?.city}}  {{object?.postal_code}}"
+                        target="_blank">
+                        <i class="fa fa-map-marker-alt" aria-hidden="true"></i>
+                        Get
+                        Direction
+                    </a> -->
+                </div>
+                <div>
+
+                </div>
+            </article>
+
+            <h5 class="mb-3 mt-3">Education and Background</h5>
+
+            <div class="form-row backgroundRow">
+                <div class="col-md-6">
+                    <h6>Specialties</h6>
+                    <p class="mb-2" *ngFor="let item of data?.specialties">{{item.name}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="mt-3">Services</h6>
+                    <p class="mb-2" *ngFor="let item of data?.services">{{item.name}}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 *ngIf="data?.hospitalName" class="mt-3">Hospital affiliations</h6>
+                    <p *ngIf="data?.hospitalName" class="mb-2">{{data?.hospitalName}}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="mt-3">Education and Qualification</h6>
+                    <p class="mb-2">{{data?.education}}</p>
+                    <p class="mb-2">{{data?.qualification}}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="mt-3">Languages spoken</h6>
+                    <p class="mb-2" *ngFor="let item of data?.languages">{{item}}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="mt-3">Provider's gender</h6>
+                    <p class="mb-2">{{data?.gender | titlecase}}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h6 class="mt-3">NPI number</h6>
+                    <p class="mb-2">{{data?.npi}}</p>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <h5 class="mt-3" id="reviewSection">Patient reviews</h5>
+            <p>All reviews have been submitted by patients after seeing the provider.</p>
+
+            <article class="form-row ratingRows">
+                <div class="col-4 mb-2 border-right">
+                    <h4>Wait time</h4>
+                    <i class="fa fa-star text-warning mr-1"></i> {{data?.waitTime}} ({{data?.reviews}})
+                </div>
+                <div class="col-4 mb-2 border-right">
+                    <h4>Manner</h4>
+                    <i class="fa fa-star text-warning mr-1"></i> {{data?.manner}} ({{data?.reviews}})
+                </div>
+                <div class="col-4 mb-2">
+                    <h4>Knowledgeable</h4>
+                    <i class="fa fa-star text-warning mr-1"></i> {{data?.knowledge}} ({{data?.reviews}})
+                </div>
+            </article>
+
+            <hr />
+
+            <div>
+                <div class="d-flex justify-content-between mb-3">
+                    <h4>{{filters.total}} reviews</h4>
+
+                    <form class="rSearchForm" (ngSubmit)="getReview()">
+                        <i class="fa fa-search" (click)="getReview()"></i>
+                        <input type="text" [(ngModel)]="filters.search" placeholder="Search"
+                            [ngModelOptions]="{standalone: true}" class="form-control" />
+                        <i class="fa fa-times" *ngIf="filters.search" (click)="clear()"></i>
+                    </form>
+                </div>
+
+                <article class="reviewBox2"
+                    *ngFor="let item of reviews | paginate: { itemsPerPage: filters?.count, currentPage: filters?.page,  totalItems:filters?.total }">
+                    <div class="rating-stars mb-1">
+                        <i class="text-warning fa-star" [ngClass]="getInt(item?.rating) > 0 ? 'fa' : 'far' "></i>
+                        <i class="text-warning fa-star" [ngClass]="getInt(item?.rating) > 1 ? 'fa' : 'far' "></i>
+                        <i class="text-warning fa-star" [ngClass]="getInt(item?.rating) > 2 ? 'fa' : 'far' "></i>
+                        <i class="text-warning fa-star" [ngClass]="getInt(item?.rating) > 3 ? 'fa' : 'far' "></i>
+                        <i class="text-warning fa-star" [ngClass]="getInt(item?.rating) > 4 ? 'fa' : 'far' "></i>
+                    </div>
+                    <p class="mb-2">{{item?.review}}</p>
+                    <div class="meta">
+                        <span>{{item?.fullName}}</span>
+                        <span>{{item?.createdAt | date}}</span>
+                    </div>
+                </article>
+
+                <div class="text-right" *ngIf="filters.total>filters.count">
+                    <pagination-controls (pageChange)="filters.page = $event;getReview();"></pagination-controls>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5 mb-3 mt-5">
+            <article class="bookingForm">
+                <h5 class="text-center mb-3">Book an appointment for free</h5>
+                <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+
+                    <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">What's your insurance plan?</label>
+                            <select class="form-control" formControlName="insurence"
+                                [ngClass]="{ 'is-invalid': submitted && f.insurence.errors }">
+                                <option value="">Select Option</option>
+                                <option *ngFor="let item of data?.insuranceName" value="{{item.id}}">{{item.name}}
+                                </option>
+                            </select>
+
+                            <div *ngIf="submitted && f.insurence.errors" class="invalid-feedback">
+                                <div *ngIf="f.insurence.errors.required">Insurance is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">What's the reason for your visit?</label>
+                            <select class="form-control" formControlName="visitType"
+                                [ngClass]="{ 'is-invalid': submitted && f.visitType.errors }">
+                                <option value="">Select Option</option>
+                                <option *ngFor="let item of visits" value="{{item.name}}">{{item.name}}</option>
+                            </select>
+
+                            <div *ngIf="submitted && f.visitType.errors" class="invalid-feedback">
+                                <div *ngIf="f.visitType.errors.required">Reason is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">Has the patient seen this doctor before?</label>
+                            <select class="form-control" formControlName="doctorBefore"
+                                [ngClass]="{ 'is-invalid': submitted && f.doctorBefore.errors }">
+                                <option value="">Select Option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+
+                            <div *ngIf="submitted && f.doctorBefore.errors" class="invalid-feedback">
+                                <div *ngIf="f.doctorBefore.errors.required">This Field is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">Choose the type of appointment</label>
+                            <select class="form-control" formControlName="appointmentType"
+                                [ngClass]="{ 'is-invalid': submitted && f.appointmentType.errors }"
+                                (change)="scheduleChange($event)">
+                                <option value="" disabled>Select Option</option>
+                                <option value="In-person"
+                                    *ngIf="data?.visitType == 'In-person' || data?.visitType == 'Both'">
+                                    In-person</option>
+                                <option value="Virtual"
+                                    *ngIf="data?.visitType == 'Virtual' || data?.visitType == 'Both'">Virtual
+                                </option>
+                            </select>
+
+                            <div *ngIf="submitted && f.appointmentType.errors" class="invalid-feedback">
+                                <div *ngIf="f.appointmentType.errors.required">Appointment Type is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+
+
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6 class="mt-2 text-center">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+                                </h6>
+                                <div class="">
+                                    <div class="btn-group">
+                                        <div class="btn btn-primary btn-sm px-2" mwlCalendarPreviousView [view]="view"
+                                            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </div>
+                                        <div class="btn btn-outline-primary btn-sm" mwlCalendarToday
+                                            [(viewDate)]="viewDate">
+                                            Today
+                                        </div>
+                                        <div class="btn btn-primary btn-sm px-2" mwlCalendarNextView [view]="view"
+                                            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="modalCalendar" [ngSwitch]="view">
+                                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate"
+                                    [events]="eventsCalendar" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+                                    (dayClicked)="dayClicked($event.day)"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)">
+                                </mwl-calendar-month-view>
+                                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate"
+                                    [events]="eventsCalendar" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)">
+                                </mwl-calendar-week-view>
+                                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate"
+                                    [events]="eventsCalendar" [refresh]="refresh"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)">
+                                </mwl-calendar-day-view>
+                            </div>
+
+
+                            <label class="isRequired mt-2">Select an available time</label>
+                            <div class="times-row">
+                                <label class="time-box border" *ngFor="let slot of allSlots"
+                                    [ngClass]="{'border-danger': slot.isBooked}">
+                                    <input type="radio" name="schedulesId" [value]="slot?.id"
+                                        formControlName="schedulesId" (change)="getSlote(slot)"
+                                        *ngIf="!slot.isBooked" />
+
+                                    <div>
+                                        <div class="time">{{slot.start | date:'shortTime'}}</div>
+                                        <p class="font-weight-medium text-danger mb-0" *ngIf="slot.isBooked">
+                                            {{slot.isBooked?'Booked':''}}</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div *ngIf="submitted && f.schedulesId.errors" class="invalid-feedback">
+                                <div *ngIf="f.schedulesId.errors.required">Slot is required</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Continue Book</button>
+
+                </form>
+            </article>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal imageModal" [ngClass]="{'d-block': imageModal}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Dr. {{data?.fullName | titlecase}}'s Images</h5>
+                <button type="button" class="close" (click)="closeImage()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ngb-carousel *ngIf="data?.image">
+                    <ng-template ngbSlide *ngFor="let item of data?.image">
+                        <div class="picsum-img-wrapper">
+                            <img [src]="_host+item" />
+                        </div>
+
+                    </ng-template>
+                </ngb-carousel>
+            </div>
+        </div>
+    </div>
+</div>

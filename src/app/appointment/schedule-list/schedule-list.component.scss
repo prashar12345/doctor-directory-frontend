@@ -1,0 +1,15 @@
+.actiontd{
+    .btn{
+        margin: 4px;
+        font-size: 12px;
+        padding: 7px 9px;
+    }
+}
+
+.filters{
+    display: flex;
+    align-items: center;
+    .btn{
+        min-width: 115px;
+    }
+}

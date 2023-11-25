@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white mainHeader">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="['/']">
+      <img src="./assets/img/logo.png" class="headerLogo" />
+    </a>
+    <button class="navbar-toggler" type="button" (click)="toggleBtn()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse headerNavbar" [ngClass]="{'show active': toggleMenu}" id="navbarNav">
+      <div class="text-right" *ngIf="toggleMenu">
+        <i class="fa fa-times closeBtn" (click)="toggleBtn()"></i>
+      </div>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" (click)="route('/page/search')">Find Doctors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="route('/page/news')">News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="route('/page/about')">About Us</a>
+        </li>
+
+        <li class="nav-item" *ngIf="user?.role == 'patient'">
+          <a class="nav-link" (click)="route('/dashboard/myappointments')">My Appointments</a>
+        </li>
+        <li *ngIf="!user" ngbDropdown class="nav-item loginDropdown">
+          <button class="nav-link btn btn-primary" ngbDropdownToggle>
+            Log in / Sign up
+          </button>
+          <div class="shadow" ngbDropdownMenu>
+            <button ngbDropdownItem>
+              <b class="pr-2">Patient</b> <a class="pr-2" (click)="route('/auth/login/patient')">Log in</a> / <a
+                class="pl-2" (click)="route('/auth/patient-signup')">Sign up</a>
+            </button>
+            <button ngbDropdownItem>
+              <b class="pr-2">Doctor</b> <a class="pr-2" (click)="route('/auth/login/doctor')">Log in</a> / <a
+                class="pl-2" (click)="route('/auth/doctor-signup')">Sign up</a>
+            </button>
+          </div>
+        </li>
+
+        <li *ngIf="user" ngbDropdown class="nav-item userDropdown">
+          <button class="nav-link" ngbDropdownToggle>
+            <img *ngIf="user?.role == 'patient'" src="{{user?.image?_host+user?.image:dImg}}">
+            <img *ngIf="user?.role == 'doctor'" src="{{user?.image?_host+user?.image[0]:dImg}}">
+            {{user?.firstName}}
+          </button>
+          <div ngbDropdownMenu>
+            <button ngbDropdownItem *ngIf="user?.role == 'doctor'" (click)="route('/dashboard/dashboard')">
+              <i class="fa fa-fire"></i>Dashboard
+            </button>
+            <button ngbDropdownItem *ngIf="user?.role == 'patient'" (click)="route('/dashboard/profile')">
+              <i class="fa fa-user"></i>Profile
+            </button>
+            <button ngbDropdownItem *ngIf="user?.role == 'doctor'" (click)="route('/dashboard/pro-profile')">
+              <i class="fa fa-user"></i>Profile
+            </button>
+            <button ngbDropdownItem (click)="changePassword()">
+              <i class="fa fa-key"></i>Change Password
+            </button>
+            <button ngbDropdownItem (click)="logout()">
+              <i class="fa fa-sign-out-alt"></i>Logout
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

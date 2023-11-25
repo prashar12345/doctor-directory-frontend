@@ -1,0 +1,164 @@
+@import "../../../assets/scss/mixin";
+
+.no_submenu{
+    &:after{
+        content:none !important;
+    }
+}
+
+i.fa.fa-bars {
+    cursor: pointer;
+}
+.sider-bar.hide {
+    position: absolute;
+    left: 21rem;
+    top: 10px;
+    z-index: 999999;
+    color: #000;
+}
+a.logo img {
+    display: block;
+    margin: auto;
+    width: 50%;
+    margin-bottom: 2rem;
+  }
+img.user-img {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  h5.text-center.fs-size {
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+.main_sidebar{
+    width: $sidebarWidth;
+    &.minSidebar{
+        display: none;
+    }
+}
+.sb2-12 ul li h5 {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    color: #000000ad;
+    font-size: 14px;
+}
+.sb2-12 ul li:nth-child(2) {
+    width: 70%;
+    padding: 0px 7px;
+}
+.sb2-12 ul li:nth-child(1) {
+    width: 20%;
+}
+.sb2-12 ul li {
+    float: left;
+    display: inline-block;
+}
+ul:not(.browser-default) li {
+    list-style-type: none;
+}
+.sb2-12 ul {
+    padding: 20px 0px 0px;
+    margin: 0px;
+    position: relative;
+    overflow: hidden;
+}
+.sb2-12 ul li img {
+    width: 30px;
+    border-radius: 50%;
+}
+.sb2-12 ul li h5 span {
+    display: block;
+    font-size: 12px;
+    color: #989fa2;
+    padding-top: 3px;
+}
+.sb2-12 {
+    position: relative;
+    overflow: hidden;
+    padding: 15px;
+    background: #fff;
+}
+
+a.collapsible-header.active {
+    color: #000 !important;
+    border-bottom: 1px solid $secondaryColor !important;
+    background: #e3e8ea !important;
+}
+
+.sb2-13 ul li a {
+    display: flex;
+    font-size: 13.5px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #efefef;
+    padding: 12px 20px;
+}
+.left-sub-menu ul li a:after{
+    font-family: none !important;
+    content: "\f105" !important;
+    display: initial !important;
+    position: absolute !important;
+    margin-top: 5px;
+    right: 20px;
+    font-size: 0px !important;
+    line-height: 1 !important;
+    -webkit-font-smoothing: none !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    transform: none;
+}
+.sb2-13 >ul> li> a:after {
+    font-family: FontAwesome;
+    content: "\f105";
+    font-size: 16px;
+    display: block;
+    position: absolute;
+    margin-top: 5px;
+    right: 20px;
+    font-size: 12px;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+    -o-transition: -webkit-transform .2s ease-in-out;
+    transition: -webkit-transform .2s ease-in-out;
+}
+.left-sub-menu ul li a {
+    display: block;
+    font-size: 13.5px;
+    padding: 10px 48px;
+}
+.sb2-1 a {
+    color: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    text-decoration: none !important;
+}
+ul.collapsible {
+    padding: 0;
+}
+.collapsible-body.left-sub-menu ul {
+    padding: 0;
+}
+.dropdown {
+    border: none;
+    padding: 0;
+    width: 100%;
+    background: #ffffff00;
+}
+i.fa {
+    margin: 5px 7px;
+}
+.dropdown:hover {
+color: white !important;
+}

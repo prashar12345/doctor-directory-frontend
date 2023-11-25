@@ -1,0 +1,41 @@
+<h1 class="section-header">
+    My Favorites
+</h1>
+
+
+<div class="WrapperCard">
+    <div class="form-row">
+        <div class="col-md-4 p-2 doctorCol"
+            *ngFor="let item of data | paginate: { itemsPerPage: filters?.count, currentPage: filters?.page,  totalItems:filters?.total }">
+            <article class="doctorDiv" (click)="viewDoctor(item.doctorId)">
+                <div class="content">
+                    <img src="{{item?.image?_host+item.image[0]:dImg}}" class="doctorIMG" />
+                    <h4>Dr. {{item?.fullName | titlecase}}</h4>
+                    <b>{{item?.visitType}}</b>
+                    <p class="text-truncate mb-2">
+                        {{item?.address}}
+                    </p>
+                    <div class="">
+                        <i class="fa fa-star text-warning mr-1"></i> {{item?.rating}} ({{item?.totalReview}})
+                    </div>
+                    <!-- <div class="star-color">
+                        <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 0 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 1 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 2 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 3 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 4 ? 'fa' : 'far' "></i>
+                    </div> -->
+                </div>
+            </article>
+            <button class="btn btn-danger" (click)="favDoctor(item.doctorId)">Un-Favorite</button>
+        </div>
+    </div>
+
+    <div *ngIf="filters.total == 0">
+        <h5 class="text-center">No Favorites</h5>
+    </div>
+
+    <div class="paginationWrapper text-right mt-3" *ngIf="filters.total>filters.count">
+        <pagination-controls (pageChange)="filters.page = $event;getData();"></pagination-controls>
+    </div>
+</div>

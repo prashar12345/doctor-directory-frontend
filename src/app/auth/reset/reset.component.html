@@ -1,0 +1,69 @@
+<ngx-spinner bdColor="#fff" size="" color="#fff">
+  <img src="assets/img/loader.gif" class="loaderLogo" width="100" />
+</ngx-spinner>
+
+<main>
+  <section class="container">
+    <!-- login -->
+    <div class="login mtcls">
+      <img class="admin-logo" src="assets/img/logo.png">
+      <!-- <strong>Welcome!</strong> -->
+      <strong>Reset Password</strong>
+
+      <form [formGroup]="Form" (ngSubmit)="onSubmit()" autocomplete="off">
+        <fieldset>
+          <div class="form">
+            <div class="form-row">
+              <div class="col-md-12 mb-2">
+
+              <div class="input_wrapper">
+                <input type="text" placeholder="Code *" autocomplete="off" formControlName="code" class="form-text"
+                [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
+              <i class="fa fa-hashtag"></i>
+              </div>
+              
+              <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+                <div *ngIf="f.code.errors.required">Code is required</div>
+              </div>
+              </div>
+
+              <div class="col-md-12 mb-2">
+                <div class="input_wrapper">
+                  <input [type]="passwordType ? 'text' : 'password'" maxlength="20" autocomplete="off" id="password" placeholder="New Password *" formControlName="newPassword" class="form-text"
+                  [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }">
+                  <i class="fa" [ngClass]="{'fa-eye-slash': !passwordType,'fa-eye': passwordType}" (click)="togglePassword()"></i>
+                </div>
+                
+                <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
+                  <div *ngIf="f.newPassword.errors.minlength">Minimum length of password is 9</div>
+                  <div *ngIf="f.newPassword.errors.required">New Password is required</div>
+                </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                  <div class="input_wrapper">
+                    <input [type]="passwordType2 ? 'text' : 'password'" maxlength="20" autocomplete="off" placeholder="Confim Password *" formControlName="confirmPassword" class="form-text"
+                    [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }">
+                    <i class="fa" [ngClass]="{'fa-eye-slash': !passwordType2,'fa-eye': passwordType2}" (click)="passwordType2 = !passwordType2"></i>
+                  </div>
+                  
+                  <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.minlength">Minimum length of password is 9</div>
+                    <div *ngIf="f.confirmPassword.errors.confirmMatch">Confirm password must match with new password</div>
+                    <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                  </div>
+                  </div>
+            </div>
+           
+            
+            <div class="form-row button-login">
+              <button class="btn btn-login">Save</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+
+  </section>
+</main>

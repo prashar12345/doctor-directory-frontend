@@ -1,0 +1,116 @@
+<h1 class="section-header">
+    Manage Calendar
+</h1>
+
+
+<div class="WrapperCard">
+    <div class="text-right mb-3">
+        <!-- <a class="btn btn-primary" id="listclickid" (click)="viewType = !viewType">
+            <span *ngIf="!viewType"><i class="fa fa-list mr-2"></i> List</span>
+            <span *ngIf="viewType"><i class="fa fa-calendar mr-2"></i> Calendar</span>
+          </a> -->
+
+        <a class="btn btn-primary" [routerLink]="['/appointment']">
+            <span><i class="fa fa-list mr-2"></i> List</span>
+            <!-- <span><i class="fa fa-calendar mr-2"></i> Calendar</span> -->
+        </a>
+
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 text-center text-md-left">
+            <div class="btn-group">
+                <div class="btn btn-primary btn-sm px-2" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()">
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+                <div class="btn btn-outline-primary btn-sm" mwlCalendarToday [(viewDate)]="viewDate">
+                    Today
+                </div>
+                <div class="btn btn-primary btn-sm px-2" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()">
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 text-center text-md-right">
+            <div class="btn-group">
+                <div class="btn btn-primary btn-sm" id="monthClickid" (click)="setView(CalendarView.Month)"
+                    [class.active]="view === CalendarView.Month">
+                    Month
+                </div>
+                <div class="btn btn-primary btn-sm" (click)="setView(CalendarView.Week)"
+                    [class.active]="view === CalendarView.Week">
+                    Week
+                </div>
+                <div class="btn btn-primary btn-sm" (click)="setView(CalendarView.Day)"
+                    [class.active]="view === CalendarView.Day">
+                    Day
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mt-2 text-center">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h4>
+
+    <div [ngSwitch]="view">
+        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="eventsCalendar"
+            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="eventsCalendar"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="eventsCalendar"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-day-view>
+    </div>
+
+    <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+
+
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade show d-block" *ngIf="viewMdal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Slot View</h5>
+                <button type="button" class="close" (click)="viewMdal = false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3" *ngIf="modalData?.event && modalData?.event.title">
+                        <label>Title</label>
+                        <p class="text">{{modalData?.event.title | titlecase}}</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Schedule Type</label>
+                        <p class="text">{{modalData?.event.scheduleType | titlecase}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Date</label>
+                        <p class="text">{{modalData?.event.start | date:'medium'}}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Status</label>
+                        <p class="text">{{modalData?.event.isBooked?'Booked':'Not Booked'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" (click)="close()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<section class="homeBanner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <h5 class="text-primary">Malaysia #1 doctors directory</h5>
+                <h2 class="mb-3">We make finding doctors easy and straight forward </h2>
+
+                <form class="seachFormHome" (ngSubmit)="search()">
+                    <input type="text" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}"
+                        placeholder="Type in doctor's name" class="form-control" />
+                    <button type="submit" class="btn btn-primary" (click)="search()">Search</button>
+                </form>
+
+                <p class="homeP">Declaimer: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis metus non
+                    nunc scelerisque scelerisque</p>
+            </div>
+
+            <div class="col-md-5">
+                <img src="./assets/img/doctor.png" class="bannerImg" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center titleMax mb-5">We only have one mission.<br /> We commit ourselves to make healthcare
+            accesible to everyone. </h2>
+
+        <div class="row align-items-center mobileSection">
+            <div class="col-md-5 text-center">
+                <img src="/assets/img/sanoo-phone.png" class="w-100" />
+            </div>
+
+            <div class="col-md-7">
+                <h2 class="mb-4">3 easy steps.<br />
+                    To see a doctor.
+                </h2>
+
+                <article class="steps_ul">
+                    <div>Enter Doctor's name, specialty or city</div>
+                    <div>Read profile and review</div>
+                    <div>Book an aapointment or an online consultation</div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-4">
+    <div class="container">
+        <h2 cl>Top Specialties</h2>
+        <article class="form-row specialtyLinks">
+            <div class="col-md-3 col-lg-2 p-2" *ngFor="let item of specialties">
+                <a (click)="viewSpacialty(item.id)">
+                    <img src="{{item.image?_host+item.image:dSpecialty}}" />
+                    <h4>{{item.name}}</h4>
+                </a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="py-4">
+    <div class="container">
+        <h2 class="mb-3">Featured Doctors</h2>
+
+        <div class="form-row">
+            <div class="col-md-3 p-2" *ngFor="let item of doctors">
+                <article class="doctorDiv" (click)="viewDoctor(item.id)">
+                    <div class="content">
+                        <img src="{{item?.image?_host+item.image[0]:dImg}}" class="doctorIMG" />
+                        <h4>Dr. {{item.fullName | titlecase}}</h4>
+                        <b>{{item.visitType}}</b>
+                        <p class="text-truncate mb-2">
+                            {{item.address}}
+                        </p>
+                        <div class="">
+                            <i class="fa fa-star text-warning mr-1"></i> {{item?.rating}} ({{item?.totalReview}})
+                        </div>
+                        <!-- <div class="star-color">
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 0 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 1 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 2 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 3 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 4 ? 'fa' : 'far' "></i>
+                        </div> -->
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-3">
+    <div class="container text-center p-3 bg-light rounded">
+        <h5 class="text-primary">If you are a doctor.</h5>
+        <h2 class="text-primary">Join us.</h2>
+        <h4 class="text-primary">Together we make the world a better place</h4>
+        <img src="/assets/img/banner.png" class="w-100" style="max-width: 450px;" />
+    </div>
+</section>

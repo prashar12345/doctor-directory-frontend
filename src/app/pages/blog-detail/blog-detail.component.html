@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 p-0">
+      <article class="blog-card">
+        <img src="{{getURL(data?.image)}}" class="BlogImage" />
+        
+        <div class="blog-card__info shadow">
+          <h5>{{data?.title | titlecase}}</h5>
+          <p>
+            <a class="icon-link mr-3"><i class="fa fa-calendar mr-2"></i> {{data?.createdAt | date}}</a>
+            <a class="icon-link mr-3"><i class="fa fa-folder mr-2"></i> {{data?.categoryID?.name | titlecase}}</a>
+          </p>
+          <p class="description" [innerHTML]="data?.description"></p>
+
+          <div class="text-right">
+            <button class="btn btn-primary" routerLink="/page/news">Back</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

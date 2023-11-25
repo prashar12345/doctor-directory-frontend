@@ -1,0 +1,486 @@
+// @import "~@swimlane/ngx-datatable/assets/icons.css";
+// @import "~@swimlane/ngx-datatable/themes/bootstrap.css";
+// @import "~@swimlane/ngx-datatable/index.css";
+@import "~ngx-toastr/toastr.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss";
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+// @import "./assets/scss/fonts";
+@import "./assets/scss/mixin";
+@import "./assets/scss/main";
+
+b, strong{
+  font-weight: 600;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a{
+  text-decoration: none !important;
+}
+
+.minHF{
+  min-height: calc(100vh - #{$headerHeight+$footerHeight});
+}
+
+label{
+  font-weight: 500;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+input:-internal-autofill-selected {
+  background-color: #ffff !important;
+}
+
+
+.modalCalendar mwl-calendar-month-view{
+  .cal-cell{
+    font-size: 12px !important;
+    line-height: normal !important;
+  }
+
+  .cal-month-view .cal-day-cell{
+    min-height: 40px !important;
+  }
+
+  .cal-month-view .cal-cell-top{
+    min-height: initial !important;
+  }
+
+  .cal-month-view .cal-day-badge {
+    background-color: #b94a48;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 4px;
+}
+
+  .cal-month-view .cal-day-number{
+    margin: 2px !important;
+  }
+
+  .cal-month-view .cal-events{
+    display: none !important;
+  }
+
+  .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.cal-month-view .cal-cell.cal-has-events.cal-open{
+  background-color:#2ad7ff;
+}
+
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.isView{
+  .isRequired{
+    &::after{
+      content: none !important;
+    }
+  }
+}
+
+.rate-area {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+
+  > label {
+    display: inline-block;
+    cursor: pointer;
+    float: right;
+    font-size: 0;
+    line-height: normal;
+    cursor: pointer;
+    color: lightgrey;
+    margin-bottom: 0 !important;
+    padding: 0 4px;
+
+    &:before {
+      font-size: 30px;
+      content: '★';
+    }
+
+    &:hover {
+      color: #e8262d;
+      ~ label {
+        color: #e8262d;
+      }
+    }
+  }
+
+  > input {
+    display: none;
+    &:checked ~ label {
+      color: gold;
+      text-shadow: none;
+    }
+  }
+
+  > input:checked + label:hover,
+  > input:checked + label:hover ~ label,
+  > input:checked ~ label:hover,
+  > input:checked ~ label:hover ~ label,
+  > label:hover ~ input:checked ~ label {
+    color: #e8262d;
+    text-shadow: none;
+  }
+}
+
+
+.doctorMarker{
+  .d-flex{
+    justify-content: space-between;
+    > img{
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    > .content{
+      width: calc(100% - 85px);
+    }
+
+    h5{
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      cursor: pointer;
+    }
+}
+
+  .dpctorAddress {
+    margin-bottom: 8px;
+  }
+}
+
+.modalCalendar{
+  .cal-open-day-events{
+    display: none !important;
+  }
+}
+
+agm-map.sebm-google-map-container {
+  height:100%;
+  width: 100%;
+}
+
+bs-datepicker-container, bs-daterangepicker-container {
+  z-index: 99999;
+}
+
+
+bs-datepicker-container {
+  .theme-green .bs-datepicker-head,
+  .theme-green .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*=select-]:after, .theme-green .bs-datepicker-body table td[class*=select-] span:after
+  {
+    background-color: $primaryColor;
+  }
+
+  .theme-green .bs-datepicker-body table td.week span{
+    color:$primaryColor;
+  }
+}
+
+.days{
+  thead{
+    tr{
+      > *:first-child{
+        display: none !important;
+      }
+    }
+  }
+  tbody{
+    tr{
+      > *:first-child{
+        display: none !important;
+      }
+    }
+  }
+}
+
+body{
+  font-family: $font1;
+  font-size: 14px;
+  font-weight: 400;
+  color: $textColor;
+}
+
+h1,h2,h3,h4,h5,h6, .h5{
+  font-family: $font1;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 42px;
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+h6 {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.bg-light {
+  background-color: #f4f5f5!important;
+}
+
+
+.form-control{
+    background-color: #fff !important;
+    background-image: none !important;
+    height: auto !important;
+    font-size: 14px;
+    line-height: normal;
+    min-height: 36px;
+    padding: 6px 12px !important;
+  &.disabled, &:disabled{
+    pointer-events: none;
+    background-color: #e9ecef !important;
+  }
+}
+
+.input_wrapper{
+  position: relative;
+
+  > i{
+      position: absolute;
+      top:50%;
+      right: 9px;
+      cursor: pointer;
+      transform: translateY(-50%);
+  }
+
+  > .form-control{
+      padding-right: 20px !important;
+  }
+}
+
+
+
+ngx-spinner{
+  > .overlay{
+    background-color: #fff;
+  }
+}
+
+.loaderLogo{
+  max-width: 60px;
+}
+
+.button-cover {
+  display: inline-block;
+  .knobs, .layer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+  }
+
+  .button {
+      position: relative;
+      width: 74px;
+      height: 36px;
+      overflow: hidden;
+  }
+
+  .button.r, .button.r .layer{
+      border-radius: 100px;
+  }
+
+  .button.b2  {
+      border-radius: 2px;
+  }
+
+  .checkbox {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 3;
+  }
+
+  .knobs {
+      z-index: 2;
+  }
+
+  .layer {
+      width: 100%;
+      background-color: #fcebeb;
+      transition: 0.3s ease all;
+      z-index: 1;
+  }
+
+}
+
+/* Button 1 */
+#button-1 .knobs:before
+{
+  content: 'NO';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 28px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  padding: 9px 4px;
+  background-color: #f44336 !important;
+  border-radius: 50%;
+  transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+
+#button-1 .checkbox:checked + .knobs:before, .button-cover .button.active .knobs:before
+{
+  content: 'YES' !important;
+  left: 42px !important;
+  background-color: #03A9F4 !important;
+}
+
+#button-1 .checkbox:checked ~ .layer, .button-cover .button.active .layer
+{
+  background-color: #ebf7fc !important;
+}
+
+#button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
+{
+  transition: 0.3s ease all;
+}
+
+.invalid-feedback{
+  display: block;
+}
+
+
+bs-datepicker-container, bs-daterangepicker-container {
+  z-index: 99999;
+}
+
+
+bs-datepicker-container {
+  .theme-green .bs-datepicker-head,
+  .theme-green .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*=select-]:after, .theme-green .bs-datepicker-body table td[class*=select-] span:after
+  {
+    background-color: $primaryColor;
+  }
+
+  .theme-green .bs-datepicker-body table td.week span{
+    color:$primaryColor;
+  }
+}
+
+.page-item.active .page-link{
+  background-color: #195997 !important;
+  border-color: #195997 !important;
+  color:#fff !important;
+}
+
+
+.modal, .pac-container{
+  z-index: 99999;
+}
+
+ngx-spinner{
+  position: relative;
+  z-index: 99999999;
+}
+
+.modal.d-block {
+  display: block;
+  overflow-y: auto;
+  background-color: #00000061;
+}
+
+.font-weight-medium{
+  font-weight: 500 !important;
+}
+
+// toster
+.toast-container .toast{
+  position: relative;
+&::before{
+  content: "";
+  font-family: "Font Awesome 5 Free" !important;
+  font-size: 20px;
+  position: absolute;
+  left:15px;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+
+  
+&:hover {
+  opacity: initial !important;
+}
+}
+
+.toast-container .toast {
+  opacity: 1;
+}
+
+.toast-container > .toast-success {
+  background-color: $sucessColor !important;
+  color: #fff;
+}
+.toast-container > .toast-error {
+  background-color: $dangerColor !important;
+  color: #fff;
+}
+.toast-container > .toast-warning {
+  background-color: $warningColor !important;
+  color: #fff;
+}
+
+
+@media(max-width:768px){
+  .main-wrapper{
+    .d-flex{
+      flex-wrap: wrap;
+    }
+    app-sidebar{
+      width: 100%;
+    }
+    .main_sidebar{
+      width: 100% !important;
+    }
+
+    .main-pannel{
+      width: 100% !important;
+      padding: 15px !important;
+    }
+  }
+}

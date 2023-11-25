@@ -1,0 +1,18 @@
+<ngx-spinner bdColor="#fff" size="" color="#fff">
+    <img src="assets/img/loader.gif" class="loaderLogo" width="100" />
+</ngx-spinner>
+
+<app-header></app-header>
+
+<div class="main-wrapper" *ngIf="showSidebar">
+    <div class="d-flex">
+    <app-sidebar></app-sidebar>
+    <div class="main-pannel">
+        <router-outlet></router-outlet>
+    </div>
+    </div>
+</div>
+
+<router-outlet *ngIf="!showSidebar"></router-outlet>
+
+<app-footer></app-footer>

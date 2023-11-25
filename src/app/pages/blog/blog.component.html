@@ -1,0 +1,47 @@
+<div class="container">
+  <h2 class="text-center">News</h2>
+  <div class="row mt-4">
+
+    <div class="col-md-12">
+      <div class="searchForm">
+        <div class="input_wrapper">
+          <input type="text" [(ngModel)]="filters.search" class="form-control" placeholder="search">
+          <i class="fa fa-times" *ngIf="filters.search" (click)="filters.search = '';getData()"></i>
+        </div>
+
+        <select [(ngModel)]="filters.categoryId" (change)="getData()" class="form-control">
+          <option value="" disabled>Select Category</option>
+          <option value="">All</option>
+          <option value="{{item.id}}" *ngFor="let item of categories">{{item.name}}</option>
+        </select>
+        <button class="btn btn-primary" type="submit" (click)="getData()">Search</button>
+      </div>
+    </div>
+
+
+
+    <div class="col-md-4"
+      *ngFor="let item of blogs | paginate: { itemsPerPage: filters?.count, currentPage: filters?.page,  totalItems:filters?.total }">
+      <div class="blog-posts ">
+        <div class="post">
+          <img src="{{getURL(item.image)}}" alt="" class="post-img" routerLink="/page/news-detail/{{item.id}}">
+          <div class="post-content">
+            <h3 routerLink="/page/news-detail/{{item.id}}">{{item.title | titlecase}}</h3>
+            <span class="date">{{ item.createdAt | date }}</span>
+            <div class="tag" routerLink="/page/news-detail/{{item.id}}">Read More...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12" *ngIf="filters.total == 0">
+      <h3 class="text-center">No News Found</h3>
+    </div>
+
+    <div class="col-md-12" *ngIf="filters.total>filters.count">
+      <pagination-controls (pageChange)="filters.page = $event;pageChanged();"></pagination-controls>
+    </div>
+
+
+  </div>
+</div>

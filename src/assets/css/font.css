@@ -1,0 +1,91 @@
+@font-face {
+    font-family: font1;
+    font-weight: 200;
+    src: url(/assets/themeFont/HelveticaNeueLT35Thin.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 200;
+    font-style: italic;
+    src: url(/assets/themeFont/HelveticaNeueLT36ThinItalic.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 300;
+    src: url(/assets/themeFont/HelveticaNeueLT45Light.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 800;
+    src: url(/assets/themeFont/HelveticaNeueLT107ExtraBlackCondensed.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 300;
+    font-style: oblique;
+    src: url(/assets/themeFont/HelveticaNeueLT23UltraLightExtendedOblique.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 400;
+    src: url(/assets/themeFont/HelveticaNeueLT57Condensed.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 400;
+    font-style: italic;
+    src: url(/assets/themeFont/HelveticaNeueLT56Italic.ttf);
+}
+
+
+
+
+@font-face {
+    font-family: font1;
+    font-weight: 500;
+    src: url(/assets/themeFont/HelveticaNeueLT65Medium.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 500;
+    font-style: italic;
+    src: url(/assets/themeFont/HelveticaNeueLT66MediumItalic.ttf);
+}
+
+
+@font-face {
+    font-family: font1;
+    font-weight: 600;
+    src: url(/assets/themeFont/HelveticaNeueLT75Bold.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 600;
+    font-style: italic;
+    src: url(/assets/themeFont/HelveticaNeueLT76BoldItalic.ttf);
+}
+
+
+@font-face {
+    font-family: font1;
+    font-weight: 600;
+    font-style: italic;
+    src: url(/assets/themeFont/HelveticaNeueLT76BoldItalic.ttf);
+}
+
+@font-face {
+    font-family: font1;
+    font-weight: 600;
+    font-style: oblique;
+    src: url(/assets/themeFont/HelveticaNeueLT75BoldOutline.ttf);
+}
+
+

@@ -1,0 +1,106 @@
+<h1 class="section-header">
+    Profile
+</h1>
+
+<div class="WrapperCard">
+    <form class="form-row viewForm" [formGroup]="Form" (ngSubmit)="onSubmit()" [ngClass]="{'isView': !isEdit}">
+
+        <div class="col-md-12 text-center mb-3">
+            <div class="text-right">
+                <button class="btn btn-primary" type="button" (click)="view()">{{isEdit?'View':'Edit'}}</button>
+            </div>
+    
+            <label class="profileImage" [ngClass]="{'cursor-pointer': isEdit}" title="{{isEdit?'Upload Profile':''}}">
+                <img [src]="Form?.value?.image?_host+Form?.value?.image:dImg" class="shadow" />
+    
+                <input *ngIf="isEdit" id="Image" type="file" [(ngModel)]="imageBase" [ngModelOptions]="{standalone: true}"
+                    (change)="uploadImage($event.target.files)" accept="image/jpg, image/jpeg, image/png,.png,.jpg,.jpeg"
+                    class="d-none">
+                <i class="fa fa-edit" *ngIf="isEdit"></i>
+            </label>
+    
+            <div *ngIf="submitted && f.image.errors && isEdit" class="invalid-feedback">
+                <div *ngIf="f.image.errors.required">Image is required</div>
+            </div>
+        </div>
+    
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">First Name</label>
+    
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.firstName}}</p>
+    
+            <input *ngIf="isEdit" type="text" formControlName="firstName" class="form-control" maxlength="20"
+                [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+    
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                <div *ngIf="f.firstName.errors.pattern">First Name is Invalid</div>
+            </div>
+        </div>
+    
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Last Name</label>
+    
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.lastName}}</p>
+            <input *ngIf="isEdit" type="text" formControlName="lastName" class="form-control" maxlength="20"
+                [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+    
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                <div *ngIf="f.lastName.errors.pattern">Last Name is Invalid</div>
+            </div>
+        </div>
+    
+        <div class="col-sm-6">
+    
+            <label for="nf-name" class="isRequired">Gender</label>
+            <section>
+    
+                <p class="text" *ngIf="!isEdit">{{Form?.value?.gender | titlecase}}</p>
+                <label class="radio_input" *ngIf="isEdit">
+                    <input type="radio" name="gender" value="male" formControlName="gender" />
+                    Male
+                </label>
+    
+                <label class="radio_input" *ngIf="isEdit">
+                    <input type="radio" name="gender" value="female" formControlName="gender" />
+                    Female
+                </label>
+    
+    
+                <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                    <div *ngIf="f.gender.errors.required">Gender is required</div>
+                </div>
+            </section>
+    
+        </div>
+    
+        <div class="col-md-6 mb-3">
+            <label>Email</label>
+            <p class="text">{{Form?.value?.email}}</p>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+            </div>
+        </div>
+    
+        <div class="col-md-6 mb-3">
+            <label class="isRequired">Phone Number</label>
+            <p class="text" *ngIf="!isEdit">{{Form?.value?.mobileNo}}</p>
+    
+            <input type="number" *ngIf="isEdit" formControlName="mobileNo" class="form-control" maxlength="12"
+                oninput="javascript: isNumber(this);"
+                [ngClass]="{ 'is-invalid': submitted && f.mobileNo.errors }">
+    
+            <div *ngIf="submitted && f.mobileNo.errors" class="invalid-feedback">
+                <div *ngIf="f.mobileNo.errors.required">Phone Number is required</div>
+                <div *ngIf="f.mobileNo.errors.min">Minimum 10 digits required</div>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-12 text-right" *ngIf="isEdit">
+            <button type="submit" class="btn btn-secondary">Save</button>
+        </div>
+    
+    </form>
+</div>

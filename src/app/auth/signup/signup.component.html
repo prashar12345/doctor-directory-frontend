@@ -1,0 +1,82 @@
+<ngx-spinner bdColor="#fff" size="" color="#fff">
+  <img src="assets/img/loader.gif" class="loaderLogo" width="100" />
+</ngx-spinner>
+
+
+<main class="sign-up">
+  <div class="sign-up__container">
+    <div class="sign-up__image">
+    <img src="assets/img/sign.png">
+    </div>
+    <div class="sign-up__content">
+      <header class="sign-up__header">
+        <h1 class="sign-up__title">
+          Sign up
+        </h1>
+        <p class="sign-up__descr">
+          Welcome, Please sign up your account.
+        </p>
+      </header>
+      <form class="sign-up__form form">
+        <div class="form__row form__row--two">
+          <div class="input form__inline-input">
+            <div class="input__container">
+              <input class="input__field" id="name" placeholder=" Name" required="" type="text" />
+              <label class="input__label" for="name"> Name</label>
+            </div>
+          </div>
+          <div class="input form__inline-input">
+            <div class="input__container">
+              <input class="input__field" id="Address" placeholder="Address" required="" type="text" />
+              <label class="input__label" for="Address">Address</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form__row form__row--two">
+            <div class="input form__inline-input">
+                <div class="input__container">
+                    <input class="input__field" id="email" placeholder="Email" required="" type="text" />
+                    <label class="input__label" for="email">Email</label>
+                  </div>
+            </div>
+          </div>
+
+      
+
+        <div class="form__row">
+            <div class="input">
+              <div class="input__container">
+                <input class="input__field" id="Password" placeholder="Password" required="" type="text" />
+                <label class="input__label" for="Password">Password</label>
+              </div>
+            </div>
+          </div>
+          <div class="form__row">
+            <div class="input">
+              <div class="input__container">
+                <input class="input__field" id="Confirm_Password" placeholder="Confirm Password" required="" type="text" />
+                <label class="input__label" for="Confirm_Password">Confirm Password</label>
+              </div>
+            </div>
+          </div>
+        <div class="form__row">
+          <div class="input-checkbox">
+            <div class="input-checkbox__container">
+              <input checked="" class="input-checkbox__field" id="agree" required="" tabindex="0" type="checkbox" /><span class="input-checkbox__square"></span>
+              <label class="input-checkbox__label" for="agree">I agree with terms and conditions</label>
+            </div>
+          </div>
+        </div>
+        <div class="form__row">
+          <div class="component component--primary form__button">
+            <button class="btn btn-primary" disabled="" id="sign-up-button" tabindex="0">Sign up</button>
+          </div>
+        </div>
+        <div class="form__row sign-up__sign">
+          Already have an account? &nbsp;<a class="link"  routerLink="/auth/login">Sign in.</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

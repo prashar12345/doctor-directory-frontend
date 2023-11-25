@@ -1,0 +1,51 @@
+<div class="sb2-1 main_sidebar">
+  <!--== LEFT MENU ==-->
+  <div class="sb2-13">
+    <ul class="collapsible mb-0" data-collapsible="accordion">
+      <li *ngIf="user?.role == 'doctor'">
+        <a [routerLink]="['/dashboard/dashboard']" routerLinkActive='active' class="collapsible-header no_submenu"><i
+            class="fa fa-fire"></i> Dashboard</a>
+      </li>
+
+      <li *ngIf="user?.role == 'patient'">
+        <a [routerLink]="['/dashboard/profile']" routerLinkActive='active' class="collapsible-header no_submenu"><i
+            class="fa fa-user"></i> Profile</a>
+      </li>
+
+      <li *ngIf="user?.role == 'doctor'">
+        <a [routerLink]="['/dashboard/pro-profile']" routerLinkActive='active' class="collapsible-header no_submenu"><i
+            class="fa fa-user"></i> Profile</a>
+      </li>
+
+      <li *ngIf="user?.role == 'doctor'">
+        <a [routerLink]="['/appointment']" routerLinkActive='active' class="collapsible-header no_submenu"><i
+            class="fa fa-calendar"></i> Appointment</a>
+      </li>
+
+      <li *ngIf="user?.role == 'patient'">
+        <a [routerLink]="['/dashboard/myappointments']" routerLinkActive='active'
+          class="collapsible-header no_submenu"><i class="fa fa-calendar"></i> My Appointments</a>
+      </li>
+
+      <li *ngIf="user?.role == 'patient'">
+        <a [routerLink]="['/dashboard/myfavorites']" routerLinkActive='active' class="collapsible-header no_submenu"><i
+            class="fa fa-heart"></i> My Favorites</a>
+      </li>
+
+
+      <!-- <li *ngIf="user?.role == 'doctor'">
+          <a [routerLink]="['/dashboard/hoursofoperation']" routerLinkActive='active' class="collapsible-header no_submenu"
+            ><i class="fa fa-clock"></i> My Hours</a
+          >
+        </li> -->
+
+      <!-- <li>
+          <a [routerLink]="['/auth/change-password']" routerLinkActive='active' class="collapsible-header no_submenu"
+            ><i class="fa fa-key"></i> Change Passowrd</a
+          >
+        </li> -->
+
+
+    </ul>
+  </div>
+</div>

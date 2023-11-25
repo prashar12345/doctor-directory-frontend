@@ -1,0 +1,255 @@
+<main class="sign-up">
+  <div class="container">
+    <div class="sign-up__content">
+
+      <h1 class="sign-up__title">
+        Review and book
+      </h1>
+      <p>To book your appointment, we need to verify a few things for Dr. {{data?.fullName}}'s office.</p>
+
+      <form class="sign-up__form form" autocomplete="off" [formGroup]="BookForm" (ngSubmit)="onBookSubmit()">
+        <div class="row m-0">
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Who will be seeing the doctor?</b>
+
+            <div class="form-control">
+              <div class="radio_lists">
+
+                <label>
+                  <input type="radio" formControlName="patientId" name="patientId" (change)="changeType('self')"
+                    value="{{user?.id}}" />
+                  {{user?.fullName}} (Me)
+                </label>
+                <label *ngFor="let item of patients">
+                  <input type="radio" formControlName="patientId" name="patientId" (change)="changeType('other')"
+                    value="{{item.id}}" />
+                  {{item.fullName}} {{item.type=='self'?'(Me)':''}}
+                </label>
+              </div>
+
+              <a class="someoneLink" (click)="someoneModal = true">Someone else</a>
+            </div>
+
+
+            <div *ngIf="submitted && b.patientType.errors" class="invalid-feedback">
+              <div *ngIf="b.patientType.errors.required">This field is required</div>
+            </div>
+
+            <div *ngIf="submitted && b.patientId.errors" class="invalid-feedback">
+              <div *ngIf="b.patientId.errors.required">Patient is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Phone number where the doctor can reach you</b>
+            <div class="input__container">
+              <input class="form-control" maxlength="12"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                formControlName="mobileNo" type="number" required="" />
+            </div>
+
+            <div *ngIf="submitted && b.mobileNo.errors" class="invalid-feedback">
+              <div *ngIf="b.mobileNo.errors.required">Phone is required</div>
+              <div *ngIf="b.mobileNo.errors.min">Minimum 10 digits required</div>
+            </div>
+          </div>
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Insurance</b>
+            <select class="form-control" formControlName="insurence"
+              [ngClass]="{ 'is-invalid': submitted && b.insurence.errors }">
+              <option value="">Select Option</option>
+              <option *ngFor="let item of data?.insuranceName" value="{{item.id}}">{{item.name}}</option>
+            </select>
+
+            <div *ngIf="submitted && b.insurence.errors" class="invalid-feedback">
+              <div *ngIf="b.insurence.errors.required">Insurance is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">What's the reason for your visit?</b>
+            <select class="form-control" formControlName="visitType"
+              [ngClass]="{ 'is-invalid': submitted && b.visitType.errors }">
+              <option value="">Select Option</option>
+              <option *ngFor="let item of visits" value="{{item.name}}">{{item.name}}</option>
+            </select>
+
+            <div *ngIf="submitted && b.visitType.errors" class="invalid-feedback">
+              <div *ngIf="b.visitType.errors.required">Reason is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Have you seen Dr. {{data?.fullName}} before?</b>
+
+            <div class="form-row mt-2">
+              <div class="col-6"><label class="radio_input">
+                  <input type="radio" name="doctorBefore" formControlName="doctorBefore" value="no">
+                  I'm a new patient</label>
+              </div>
+              <div class="col-6"><label class="radio_input">
+                  <input type="radio" formControlName="doctorBefore" name="doctorBefore" value="yes">
+                  I've seen this doctor before</label>
+              </div>
+            </div>
+
+            <div *ngIf="submitted && b.doctorBefore.errors" class="invalid-feedback">
+              <div *ngIf="b.doctorBefore.errors.required">This field is required</div>
+            </div>
+          </div>
+
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Insurance</b>
+            <select class="form-control" formControlName="insurence"
+              [ngClass]="{ 'is-invalid': submitted && b.insurence.errors }">
+              <option value="">Select Option</option>
+              <option *ngFor="let item of data?.insuranceName" value="{{item.id}}">{{item.name}}</option>
+            </select>
+
+            <div *ngIf="submitted && b.insurence.errors" class="invalid-feedback">
+              <div *ngIf="b.insurence.errors.required">Insurance is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Appointment Time</b>
+            <p class="text">{{schedule | date:'shortTime'}}</p>
+          </div>
+
+          <div class="col-md-12 px-0 mb-3">
+            <b>Notes for the doctor's office (optional)</b>
+            <textarea class="form-control" formControlName="description"
+              [ngClass]="{ 'is-invalid': submitted && b.description.errors }"></textarea>
+
+            <div *ngIf="submitted && b.description.errors" class="invalid-feedback">
+              <div *ngIf="b.description.errors.required">Description is required</div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+
+
+
+
+        <label class="agreelable">
+          <input type="checkbox" formControlName="agree" />
+          I agree with <a routerLink="/page/terms" class="primary">Terms of Use</a> and <a routerLink="/page/privacy" class="primary">privacy Policy</a>
+        </label>
+
+        <div *ngIf="submitted && !BookForm.value.agree" class="invalid-feedback">
+          Agreement is Required
+        </div>
+        <div class="w-100">
+          <button class="btn btn-primary" id="sign-up-button" tabindex="0">Book Appointment</button>
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+</main>
+
+
+<!-- Modal -->
+<div class="modal" [ngClass]="{'d-block': someoneModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Someone</h5>
+        <button type="button" class="close" (click)="someoneModal = false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form autocomplete="off" [formGroup]="patientForm" (ngSubmit)="patientSubmit()">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="col-md-12 mb-3">
+              <label class="isRequired">Patient's name</label>
+              <div class="form-row">
+                <div class="col-6">
+                  <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" />
+
+                  <div *ngIf="submitted && p.firstName.errors" class="invalid-feedback">
+                    <div *ngIf="p.firstName.errors.required">First Name is required</div>
+                    <div *ngIf="p.firstName.errors.pattern">First Name is invalid</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" />
+
+                  <div *ngIf="submitted && p.lastName.errors" class="invalid-feedback">
+                    <div *ngIf="p.lastName.errors.required">Last Name is required</div>
+                    <div *ngIf="p.lastName.errors.pattern">Last Name is invalid</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label>Patient's email (optional)</label>
+              <input type="email" class="form-control" formControlName="email" />
+              <div *ngIf="submitted && p.email.errors" class="invalid-feedback">
+                <div *ngIf="p.email.errors.required">Email is required</div>
+                <div *ngIf="p.email.errors.email || p.email.errors.pattern">Please Enter Valid Email</div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="isRequired">Patient's date of birth</label>
+              <input type="date" class="form-control" formControlName="dob" />
+
+              <div *ngIf="submitted && p.dob.errors" class="invalid-feedback">
+                <div *ngIf="p.dob.errors.required">Date of bith is required</div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="isRequired">Are you the parent or legal guardian of this patient?</label>
+              <div>
+                <label class="radio_input">
+                  <input type="radio" value="yes" formControlName="legalGuardian" name="legalGuardian" /> Yes
+                </label>
+
+                <label class="radio_input">
+                  <input type="radio" value="no" formControlName="legalGuardian" name="legalGuardian" /> No
+                </label>
+              </div>
+
+              <div *ngIf="submitted && p.legalGuardian.errors" class="invalid-feedback">
+                <div *ngIf="p.legalGuardian.errors.required">This field is required</div>
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-3">
+              <label class="isRequired">Patient's sex assigned at birth</label>
+              <div>
+                <label class="radio_input">
+                  <input type="radio" value="male" formControlName="gender" name="gender" /> Male
+                </label>
+
+                <label class="radio_input">
+                  <input type="radio" value="female" formControlName="gender" name="gender" /> Female
+                </label>
+              </div>
+
+              <div *ngIf="submitted && p.gender.errors" class="invalid-feedback">
+                <div *ngIf="p.gender.errors.required">This field is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="someoneModal = false">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

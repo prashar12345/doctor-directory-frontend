@@ -1,0 +1,507 @@
+<main scrollSpy [spiedTags]="['DIV']">
+
+
+
+    <div class="bgGray py-5">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-md-4">
+                    <img src="{{data?.image?_host+data.image[0]:dImg}}" class="doctorImage" />
+                </div>
+                <div class="col-md-8">
+                    <h2 class="heading">Dr. {{data?.fullName | titlecase}}
+                        <a class="favDoctor" title="{{data?.isFavourite?'Un-Favorite':'Favorite'}}"
+                            *ngIf="user && user?.role == 'patient'" (click)="favDoctor(data.id)">
+                            <i class="fa-heart" [ngClass]="{'fa': data?.isFavourite, 'far': !data?.isFavourite}"></i>
+                        </a>
+                    </h2>
+
+                    <p class="specialities mb-2">
+                        <b>Specialties :</b> <span class="m-1 badge badge-warning"
+                            *ngFor="let item of data?.specialties">{{item.name | titlecase}}</span>
+                    </p>
+
+                    <div class="">
+                        <a class="cursor-pointer" (click)="scrollTo('reviewDiv')"><i
+                                class="fa fa-star text-warning mr-1"></i>
+                            {{data?.review_avrage}} ({{data?.reviews}})</a>
+                    </div>
+
+                    <!-- <p class="rating mt-3" *ngIf="this.filters.total>0"><b>{{this.filters.total}} reviews</b></p> -->
+                    <!-- <div class="rating-stars" *ngIf="this.filters.total>0">
+                    <i class="yellow fa-star" [ngClass]="review_avrage > 0 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="review_avrage > 1 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="review_avrage > 2 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="review_avrage > 3 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="review_avrage > 4 ? 'fa' : 'far' "></i>
+                </div> -->
+                    <div class="bottom-setion mt-3">
+                        <button class="btn btn-primary m-2">Claim Profile</button>
+                        <button class="btn btn-primary m-2" *ngIf="user?.role != 'doctor'"
+                            (click)="openModal()">Appointment</button>
+
+                        <br />
+                        <small class="mt-4">Disclaimer: {{data?.aboutus}}</small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <h2 class="heading">Profile</h2>
+            </div>
+
+            <div class="col-md-3 mb-3" *ngIf="data?.experience">
+                <div class="bg">
+                    <h1 class="hrs">{{data?.experience}}</h1>
+                    <h4>year of experience</h4>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3" *ngIf="!data?.individualType">
+                <div class="bg">
+                    <h1>{{data?.hospitalName}}</h1>
+                    <h4>Hospital</h4>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3" *ngIf="data?.education">
+                <div class="bg">
+                    <h1>{{data?.education}}</h1>
+                    <h4>Education</h4>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="bg">
+                    <h1 *ngFor="let item of data?.languages">{{item}}</h1>
+                    <h4>Language</h4>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-3 mb-3">
+                <div class="bg">
+                    <h1 *ngFor="let item of data?.insuranceName">{{item.name}}</h1>
+                    <h4>Insurances</h4>
+                </div>
+            </div> -->
+
+            <div class="col-md-3 mb-3" *ngIf="data?.qualification">
+                <div class="bg">
+                    <h1>{{data?.qualification}}</h1>
+                    <h4>Qualifications</h4>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="bg">
+                    <h1>{{data?.npi}}</h1>
+                    <h4>Medical registration no.</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="bg">
+                    <h1>{{data?.gender | titlecase}}</h1>
+                    <h4>Gender</h4>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 mt-4">
+                <h2 class="heading">Services</h2>
+                <article class="form-row specialtyLinks">
+                    <div class="col-md-3 col-lg-2 p-2" *ngFor="let item of data?.services">
+                        <a>
+                            <img src="{{item.image?_host+item.image:dImg}}" />
+                            <h4>{{item.name}}</h4>
+                        </a>
+                    </div>
+                </article>
+                <!-- <div class="form-row">
+                    <div class="col-md-6" *ngFor="let item of data?.services">
+                        <h4 class="services">{{item.name}}</h4>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="col-md-12">
+                <h2 class="heading">Insurances</h2>
+                <article class="insuranceList form-row mb-3">
+                    <div class="col-md-4 p-2" *ngFor="let item of data?.insuranceName">
+                        <div class="insuranceItem">
+                            <img src="{{item?.image?_host+item?.image:dImg}}" />
+                            <h4>{{item.name}}</h4>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </div>
+
+    <section class="bgSection rating mt-3" id="reviewDiv">
+        <div class="container">
+            <h2 class="heading">Reviews</h2>
+            <h4>Read and share about your experience with Dr. {{data?.fullName | titlecase}}</h4>
+
+
+
+            <div class="primary">
+                <p>Your trust is our top concern, so providers can't pay to alter or remove review. We also don't
+                    publish reviews that contain any private patient health information.</p>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3">
+                    <h3>Wait time</h3>
+                </div>
+                <div class="col-md-9">
+                    <div class="rating-stars">
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.waitTime) > 0 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.waitTime) > 1 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.waitTime) > 2 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.waitTime) > 3 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.waitTime) > 4 ? 'fa' : 'far' "></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3">
+                    <h3>Manner</h3>
+                </div>
+                <div class="col-md-9">
+                    <div class="rating-stars">
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.manner) > 0 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.manner) > 1 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.manner) > 2 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.manner) > 3 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.manner) > 4 ? 'fa' : 'far' "></i>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-3">
+                    <h3>Knowledgeable</h3>
+                </div>
+                <div class="col-md-9">
+                    <div class="rating-stars">
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.knowledge) > 0 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.knowledge) > 1 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.knowledge) > 2 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.knowledge) > 3 ? 'fa' : 'far' "></i>
+                        <i class="yellow fa-star" [ngClass]="getInt(data?.knowledge) > 4 ? 'fa' : 'far' "></i>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3"
+                *ngFor="let item of reviews | paginate: { itemsPerPage: filters?.count, currentPage: filters?.page,  totalItems:filters?.total }">
+                <!-- <i class="fa fa-star yellow"></i>
+            <i class="fa fa-star yellow"></i>
+            <i class="fa fa-star yellow"></i>
+            <i class="fa fa-star yellow"></i>
+            <i class="fa fa-star yellow"></i> -->
+
+                <div class="rating-stars">
+                    <i class="yellow fa-star" [ngClass]="item?.rating > 0 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="item?.rating > 1 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="item?.rating > 2 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="item?.rating > 3 ? 'fa' : 'far' "></i>
+                    <i class="yellow fa-star" [ngClass]="item?.rating > 4 ? 'fa' : 'far' "></i>
+                </div>
+                <p class="font-bold">
+                    {{item?.review}}
+                </p>
+                <div class="text-right">
+                    <span class="right-bold">{{item?.createdAt | date}}. </span> <span
+                        class="right-bold">{{item?.fullName}}</span>
+                </div>
+            </div>
+
+            <div class="text-right" *ngIf="filters.total>filters.count">
+                <pagination-controls (pageChange)="filters.page = $event;getReview();"></pagination-controls>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="contact-section container mt-5">
+        <h2 class="heading mb-3 mt-3">Contact</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="map-responsive w-100" style="height: 300px;">
+                    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false">
+                        <agm-marker *ngFor="let data of markers; let i = index" [latitude]="data.lat"
+                            [longitude]="data.lng">
+                        </agm-marker>
+                    </agm-map>
+                </div>
+                <h4 class="contact-detail mb-3" *ngIf="data?.hospitalName">{{data?.hospitalName}}</h4>
+                <h4 class="contact-detail">{{data?.address}}</h4>
+                <h4 class="contact-detail mb-3">Mobile: {{data?.mobileNo}}</h4>
+
+
+
+            </div>
+
+            <div class="col-md-6">
+                <article class="openingHrs">
+                    <h4 class="openHrs">Opening Hours</h4>
+                    <div class="d-flex">
+                        <span class="day w-10">Mon :</span>
+                        <span class="time">8:00am - 5:00pm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="day w-10">Tue :</span>
+                        <span class="time">8:00am - 5:00pm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="day w-10">Wed :</span>
+                        <span class="time">8:00am - 5:00pm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="day w-10">Thu :</span>
+                        <span class="time">8:00am - 5:00pm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="day w-10">Fri :</span>
+                        <span class="time">8:00am - 5:00pm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="day w-10">Sat :</span>
+                        <span class="time">8:00am - 5:00pm</span>
+                    </div>
+                    <div class="d-flex">
+                        <span class="day w-10">Sun :</span>
+                        <span class="time">Close</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-4">
+        <div class="container">
+            <h2 class="mb-4 mt-4">Related Doctors</h2>
+
+            <div class="form-row">
+                <div class="col-md-3 mb-3" *ngFor="let item of doctors">
+                    <article class="doctorDiv" (click)="veiwRelated(item.id)">
+                        <div class="content">
+                            <img src="{{item?.image?_host+item.image[0]:dImg}}" class="doctorIMG" />
+                            <h4>Dr. {{item.fullName | titlecase}}</h4>
+                            <b>{{item.visitType}}</b>
+                            <p class="text-truncate mb-2">
+                                {{item.address}}
+                            </p>
+
+                            <div class="">
+                                <i class="fa fa-star text-warning mr-1"></i> {{item?.rating}} ({{item?.totalReview}})
+                            </div>
+                            <!-- <div class="star-color">
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 0 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 1 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 2 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 3 ? 'fa' : 'far' "></i>
+                            <i class="yellow fa-star" [ngClass]="getInt(item?.rating) > 4 ? 'fa' : 'far' "></i>
+                        </div> -->
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+
+
+            <div class="text-right">
+                <a class="primary more cursor-pointer" (click)="viewRelatedDoctor()">More ></a>
+            </div>
+        </div>
+    </section>
+    <section class="mt-5 container">
+        <div class="primaryBg">
+            <div class="text-center">
+                <h2 class="headingHealth">
+                    Be informed and live healthier.
+                </h2>
+                <h4>We believe information and knowledge are the keys to healthy living.
+                </h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News -->
+
+    <div class="newsSection mt-5">
+        <section class="container">
+            <h2 class="heading mb-4">Latest News</h2>
+            <div class="row">
+                <div class="col-md-4" *ngFor="let item of blogs">
+                    <img class="w-100 img-responsive news cursor-pointer" routerLink="/page/news-detail/{{item.id}}"
+                        src="{{item.image?_host+item.image:dBlog}}">
+                    <p class="bold" routerLink="/page/news-detail/{{item.id}}">{{item.title}}</p>
+                    <div class="text-right">
+                        <p>{{item.createdAt | date}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="text-right w-100 mt-3">
+                <a class="primary more" routerLink="/page/news">More ></a>
+            </div>
+        </section>
+    </div>
+
+</main>
+
+<!-- Appointment Modal -->
+<div class="modal appointmentModal" [ngClass]="{'d-block': appointmentModal, 'isparamModal':isparamModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Book an appointment</h5>
+                <button type="button" class="close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">What's your insurance plan?</label>
+                            <select class="form-control" formControlName="insurence"
+                                [ngClass]="{ 'is-invalid': submitted && f.insurence.errors }">
+                                <option value="">Select Option</option>
+                                <option *ngFor="let item of data?.insuranceName" value="{{item.id}}">{{item.name}}
+                                </option>
+                            </select>
+
+                            <div *ngIf="submitted && f.insurence.errors" class="invalid-feedback">
+                                <div *ngIf="f.insurence.errors.required">Insurance is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">What's the reason for your visit?</label>
+                            <select class="form-control" formControlName="visitType"
+                                [ngClass]="{ 'is-invalid': submitted && f.visitType.errors }">
+                                <option value="">Select Option</option>
+                                <option *ngFor="let item of visits" value="{{item.name}}">{{item.name}}</option>
+                            </select>
+
+                            <div *ngIf="submitted && f.visitType.errors" class="invalid-feedback">
+                                <div *ngIf="f.visitType.errors.required">Reason is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">Has the patient seen this doctor before?</label>
+                            <select class="form-control" formControlName="doctorBefore"
+                                [ngClass]="{ 'is-invalid': submitted && f.doctorBefore.errors }">
+                                <option value="">Select Option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+
+                            <div *ngIf="submitted && f.doctorBefore.errors" class="invalid-feedback">
+                                <div *ngIf="f.doctorBefore.errors.required">This Field is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-2">
+                            <label class="isRequired">Choose the type of appointment</label>
+                            <select class="form-control" formControlName="appointmentType"
+                                [ngClass]="{ 'is-invalid': submitted && f.appointmentType.errors }"
+                                (change)="scheduleChange($event)">
+                                <option value="" disabled>Select Option</option>
+                                <option value="In-person"
+                                    *ngIf="data?.visitType == 'In-person' || data?.visitType == 'Both'">In-person
+                                </option>
+                                <option value="Virtual"
+                                    *ngIf="data?.visitType == 'Virtual' || data?.visitType == 'Both'">Virtual</option>
+                            </select>
+
+                            <div *ngIf="submitted && f.appointmentType.errors" class="invalid-feedback">
+                                <div *ngIf="f.appointmentType.errors.required">Appointment Type is required</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+
+
+                            <div class="d-flex justify-content-between">
+                                <h4 class="mt-2 text-center">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+                                </h4>
+                                <div class="">
+                                    <div class="btn-group">
+                                        <div class="btn btn-primary btn-sm px-2" mwlCalendarPreviousView [view]="view"
+                                            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </div>
+                                        <div class="btn btn-outline-primary btn-sm" mwlCalendarToday
+                                            [(viewDate)]="viewDate">
+                                            Today
+                                        </div>
+                                        <div class="btn btn-primary btn-sm px-2" mwlCalendarNextView [view]="view"
+                                            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="modalCalendar" [ngSwitch]="view">
+                                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate"
+                                    [events]="eventsCalendar" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+                                    (dayClicked)="dayClicked($event.day)"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)">
+                                </mwl-calendar-month-view>
+                                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate"
+                                    [events]="eventsCalendar" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)">
+                                </mwl-calendar-week-view>
+                                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate"
+                                    [events]="eventsCalendar" [refresh]="refresh"
+                                    (eventClicked)="handleEvent('Clicked', $event.event)">
+                                </mwl-calendar-day-view>
+                            </div>
+
+
+                            <label class="isRequired mt-3">Select an available time</label>
+                            <div class="times-row">
+                                <label class="time-box border" *ngFor="let slot of allSlots"
+                                    [ngClass]="{'border-danger': slot.isBooked}">
+                                    <input type="radio" name="schedulesId" [value]="slot?.id"
+                                        formControlName="schedulesId" (change)="getSlote(slot)"
+                                        *ngIf="!slot.isBooked" />
+
+                                    <div>
+                                        <div class="time">{{slot.start | date:'shortTime'}}</div>
+                                        <p class="font-weight-medium text-danger mb-0" *ngIf="slot.isBooked">
+                                            {{slot.isBooked?'Booked':''}}</p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div *ngIf="submitted && f.schedulesId.errors" class="invalid-feedback">
+                                <div *ngIf="f.schedulesId.errors.required">Slot is required</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+                    <button type="submit" class="btn btn-primary">Continue Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

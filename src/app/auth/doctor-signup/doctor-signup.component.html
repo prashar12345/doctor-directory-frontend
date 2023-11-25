@@ -1,0 +1,355 @@
+<ngx-spinner bdColor="#fff" size="" color="#fff">
+  <img src="assets/img/loader.gif" class="loaderLogo" width="100" />
+</ngx-spinner>
+<main class="sign-up">
+  <div class="container">
+    <div class="sign-up__content">
+      <div class="row">
+        <div class="col-md-12 p-0">
+          <h1 class="sign-up__title">
+            Doctor Sign Up
+          </h1>
+          <div class="form__row sign-up__sign">
+            Already have an account? &nbsp;<a class="link" routerLink="/auth/login/doctor">Log in.</a>
+          </div>
+        </div>
+      </div>
+      <form class="sign-up__form form" [formGroup]="Form" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <b class="isRequired">Your Details</b>
+          </div>
+          <div class="col-md-6">
+            <div class="input__container">
+              <input class="form-control" id="firstName" placeholder="First Name" formControlName="firstName"
+                required="" type="text" />
+              <!-- <label class="input__label" for="firstName">First Name</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+              <div *ngIf="f.firstName.errors.required">First Name is required</div>
+              <div *ngIf="f.firstName.errors.pattern">First Name is invalid</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="input__container">
+              <input class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName" type="text"
+                required="" />
+              <!-- <label class="input__label" for="lastName">Last Name</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+              <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+              <div *ngIf="f.lastName.errors.pattern">Last Name is invalid</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row ">
+
+          <div class="col-md-6">
+            <div class="input__container">
+              <input class="form-control" id="Phone" maxlength="12" placeholder="Phone Number"
+              oninput="javascript: isNumber(this);"
+                formControlName="mobileNo" type="number" required="" />
+            </div>
+
+            <div *ngIf="submitted && f.mobileNo.errors" class="invalid-feedback">
+              <div *ngIf="f.mobileNo.errors.required">Phone is required</div>
+              <div *ngIf="f.mobileNo.errors.min">Minimum 10 digits required</div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="input__container">
+              <input class="form-control" placeholder="Email" id="email" formControlName="email" type="text"
+                required="" />
+              <!-- <label class="input__label" for="email">Email</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email || f.email.errors.pattern">Please Enter Valid Email</div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="input__container">
+
+              <input class="form-control" placeholder="Address" ngx-google-places-autocomplete autocomplete="off"
+                formControlName="address" #placesRef="ngx-places" (change)="addressCheck()" (onAddressChange)="handleAddressChange($event)"
+                required="" />
+
+              <!-- <label class="input__label" for="address">Address</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.address?.errors" class="invalid-feedback">
+              <div *ngIf="f.address?.errors?.required">Address is required</div>
+            </div>
+
+            <div *ngIf="submitted && !isAddressSelected && Form.value.address" class="invalid-feedback">
+              Please select Address from Dropdown
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="input__container">
+
+              <select formControlName="gender" id="Gender" required="" class="form-control">
+                <option selected disabled value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+
+              <!-- <label class="input__label" for="Gender">Gender</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+              <div *ngIf="f.gender.errors.required">Gender is required</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="input__container">
+              <label class="input__label isRequired" for="visitType">Visit Type</label>
+              <select formControlName="visitType" id="visitType" required="" class="form-control">
+                <option value="">Select Visit Type</option>
+                <option>In-person</option>
+                <option>Virtual</option>
+                <option>Both</option>
+              </select>
+
+
+            </div>
+
+            <div *ngIf="submitted && f.visitType.errors" class="invalid-feedback">
+              <div *ngIf="f.visitType.errors.required">Visit Type is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="isRequired mkLabel">Language</label>
+            <ss-multiselect-dropdown [options]="myOptions" class="form-control" [settings]="mySettings"
+              formControlName="languages">
+            </ss-multiselect-dropdown>
+
+            <div>
+              <span class="badge badge-primary m-1" *ngFor="let item of Form.value.languages">{{item}}</span>
+            </div>
+
+            <div *ngIf="submitted && f.languages.errors" class="invalid-feedback mkinvalid">
+              <div *ngIf="f.languages.errors.required">Language is required</div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+
+          <div class="col-md-12 p-0">
+            <div class="input__container">
+              <label class="input__label isRequired" for="npi">NPI Number</label>
+              <input class="form-control" id="npi" type="number" maxlength="12"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                formControlName="npi" required="" />
+
+            </div>
+
+            <div *ngIf="submitted && f.npi.errors" class="invalid-feedback">
+              <div *ngIf="f.npi.errors.required">NPI Number is required</div>
+              <div *ngIf="f.npi.errors.min">Minimum 10 digits required</div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <label class="isRequired mkLabel">Insurances</label>
+            <ss-multiselect-dropdown [options]="myInsurances" class="form-control" [settings]="mySettings"
+              formControlName="insurances">
+            </ss-multiselect-dropdown>
+
+            <div class="">
+              <span class="badge badge-primary m-1"
+                *ngFor="let item of Form.value.insurances">{{getSingleInsurance(item)}}</span>
+            </div>
+
+            <div *ngIf="submitted && f.insurances.errors" class="invalid-feedback mkinvalid">
+              <div *ngIf="f.insurances.errors.required">Insurances is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+
+            <label class="isRequired mkLabel">Specialties</label>
+            <ss-multiselect-dropdown [options]="mySpecialties" class="form-control" [settings]="mySettings"
+              formControlName="specialties">
+            </ss-multiselect-dropdown>
+
+            <div class="">
+              <span class="badge badge-primary m-1"
+                *ngFor="let item of Form.value.specialties">{{getSingleSpecialty(item)}}</span>
+            </div>
+
+            <div *ngIf="submitted && f.specialties.errors" class="invalid-feedback mkinvalid">
+              <div *ngIf="f.specialties.errors.required">Specialties is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="isRequired mkLabel">Services</label>
+            <ss-multiselect-dropdown [options]="myservices" class="form-control" [settings]="mySettings"
+              formControlName="services">
+            </ss-multiselect-dropdown>
+
+            <div class="">
+              <span class="badge badge-primary m-1"
+                *ngFor="let item of Form.value.services">{{getSingleSpecialty(item)}}</span>
+            </div>
+
+            <div *ngIf="submitted && f.services.errors" class="invalid-feedback mkinvalid">
+              <div *ngIf="f.services.errors.required">Services is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class="col-md-6">
+            <label class="mkLabel">Are you a Individual Doctor</label>
+            <section>
+              <div class="button-cover">
+                <div class="button r" id="button-1">
+                  <input type="checkbox" formControlName="individualType" (change)="areIndividual()" class="checkbox" />
+                  <div class="knobs"></div>
+                  <div class="layer"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div class="col-md-6" *ngIf="!Form.value.individualType">
+            <div class="input__container">
+              <label class="input__label isRequired" for="hospitalId">Hospital</label>
+              <select formControlName="hospitalId" id="hospitalId" class="form-control">
+                <option value="" selected disabled>Select Option</option>
+                <option *ngFor="let item of hospitals" value="{{item.id}}">{{item.name}}</option>
+              </select>
+
+
+            </div>
+
+            <div *ngIf="submitted && f.hospitalId.errors" class="invalid-feedback">
+              <div *ngIf="f.hospitalId.errors.required">Hospital is required</div>
+            </div>
+          </div>
+          <!-- 
+          <div class="input form__inline-input">
+            <label class="isRequired mkLabel">Images</label>
+            <div>
+              <input id="Image" type="file" [(ngModel)]="imageBase" [ngModelOptions]="{standalone: true}"
+                (change)="uploadImage($event.target.files)" accept="image/jpg, image/jpeg, image/png,.png,.jpg,.jpeg"
+                multiple class="d-none">
+
+              <label for="Image" class="btn btn-primary mb-0">Upload Image</label>
+
+              <div class="" *ngIf="Form.value.image.length != 0">
+                <div class="thumbImg" *ngFor="let item of Form.value.image; let i = index">
+                  <img src="{{_host}}{{item}}" alt="">
+                  <i class="fa fa-times" (click)="removeImage(i)"></i>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="submitted && f.image.errors" class="invalid-feedback mkinvalid">
+              <div *ngIf="f.image.errors.required">Image is required</div>
+            </div>
+          </div> -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <div class="input__container">
+              <label class="input__label isRequired" for="aboutus">About Us</label>
+              <textarea class="form-control" id="aboutus" formControlName="aboutus" required=""></textarea>
+
+            </div>
+
+            <div *ngIf="submitted && f.aboutus.errors" class="invalid-feedback">
+              <div *ngIf="f.aboutus.errors.required">About Us is required</div>
+            </div>
+          </div>
+
+       
+
+          <div class="col-md-6">
+            <label class="input__label isRequired">Password</label>
+            <div class="input__container">
+              <input class="form-control" id="password" maxlength="20" type="password"
+                formControlName="password" required="" />
+              <!-- <label class="input__label" for="password">Password</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Minimum Length 9 is required</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="input__label isRequired">Confirm Password</label>
+            <div class="input__container">
+              <input class="form-control" maxlength="20" id="confirmPassword" type="password"
+                formControlName="confirmPassword" required="" />
+             
+            </div>
+
+            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+              <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+              <div *ngIf="f.confirmPassword.errors.confirmMatch">Confirm password must match with password</div>
+              <div *ngIf="f.confirmPassword.errors.minlength">Minimum Length 9 is required</div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div class="row">
+          <label class="agreelable isRequired">
+            <input type="checkbox" formControlName="agree" />
+            I agree with <a routerLink="/page/terms" class="primary">Terms of Use</a> and <a routerLink="/page/privacy" class="primary">Privacy Policy</a>
+          </label>
+
+          <div *ngIf="submitted && !Form.value.agree" class="invalid-feedback">
+            Agreement is Required
+          </div>
+          <div class="w-100">
+            <button class="btn btn-primary" id="sign-up-button" tabindex="0">Sign up</button>
+          </div>
+        </div>
+        <!-- <div class="form__row sign-up__sign">
+          Already have an account? &nbsp;<a class="link" routerLink="/auth/login/doctor">Sign in.</a>
+        </div> -->
+      </form>
+    </div>
+  </div>
+</main>

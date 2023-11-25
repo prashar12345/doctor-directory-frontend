@@ -1,0 +1,186 @@
+@import "../../../assets/scss/mixin";
+
+.bannerImg{
+    width: 100%;
+    // max-width: 100px;
+}
+
+.homeBanner{
+    position: relative;
+    > .container{
+        position: relative;
+        
+        h2{
+            font-weight: 500;
+        }
+
+        .homeP{
+            margin-top: 100px;
+        }
+    }
+
+    &::before{
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 1300px;
+        border-radius: 6px;
+        height: 90%;
+        background-color: #f5f6f6;
+    }
+}
+
+.mobileSection{
+    position: relative;
+    >*{
+        position: relative;
+    }
+
+    &::before{
+        content: "";
+        position: absolute;
+        left: 50%;
+        top:50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 1300px;
+        border-radius: 6px;
+        height: 80%;
+        background-color: #f5f6f6;
+    }
+}
+
+.seachFormHome{
+    display: flex;
+    justify-content: space-between;
+    > .form-control{
+        border-radius: 0;
+        border: 1px solid $primaryColor;
+        padding: 14px 10px;
+        line-height: normal;
+        height: auto;
+        width:calc(100% - 140px);
+    }
+
+    >.btn{
+        width: 130px;
+        line-height: normal;
+        padding: 14px 10px;
+        border-radius: 0;
+    }
+}
+
+.titleMax {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+}
+
+.steps_ul{
+    counter-reset: section;
+    > *{
+        position: relative;
+        font-size: 18px;
+        line-height: 26px;
+        padding-left: 42px;
+        margin-bottom: 14px;
+
+        &::before{
+            counter-increment: section;
+            content: counter(section);
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 35px;
+            font-size: 14px;
+            height: 35px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid;
+            justify-content: center;
+            border-radius: 50%;
+        }
+    }
+}
+
+.specialtyLinks{
+    > *{
+        padding-top:2px;
+        padding-bottom: 2px;
+        a{
+            display: block;
+            padding: 15px;
+            border: 1px solid rgb(223, 225, 229);
+            border-radius: 3px;
+            color: $textColor;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            height: 100%;
+
+            &:hover{
+                box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 2px;
+                border: 1px solid rgb(223, 225, 229);
+            }
+            > img{
+                height: 60px;
+                width: 60px;
+                object-fit: cover;
+                border-radius: 50%;
+                object-position: center top;
+                border: 1px solid rgb(223, 225, 229);
+            }
+
+            h4{
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: 0;
+                margin-top: 10px;
+            }
+        }
+    }
+    
+}
+
+.specialtyMore{
+    display: inline-block;
+    color: $primaryColor;
+    margin-top:15px;
+    font-weight: 500;
+}
+
+.doctorDiv{
+    border: 1px solid rgb(223, 225, 229);
+    margin-top: 42px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover{
+        box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 2px;
+        border: 1px solid rgb(223, 225, 229);
+    }
+
+    .content{
+        padding: 15px;
+        border-radius: 3px;
+        h4{
+            margin-top: 12px;
+        }
+    }
+    .doctorIMG{
+        width:80px;
+        height:80px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: top;
+        margin-top: -58px;
+        border: 1px solid rgb(223, 225, 229);
+    }
+}
+
+.star-color{
+    color:#fec24a
+}

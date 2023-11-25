@@ -1,0 +1,46 @@
+.sign-up__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sign-up__content {
+  width: 578px;
+display: block;
+margin: auto;
+padding-top: 5rem;
+}
+main.sign-up {
+  background: #F3F3F4;
+  padding-bottom: 2rem;
+}
+
+input.form-control {
+  border-radius: 0px;
+  padding: 22px;
+}
+h1.sign-up__title {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+select.form-control {
+  border-radius: 0px;
+}
+.input__container.form-control {
+  border-radius: 0px;
+  padding-bottom: 31px;
+  padding-top: 10px;
+}
+ul.PasswordRules {
+  padding: 0px 22px;
+}
+.form__row.sign-up__sign {
+  font-size: 15px;
+  font-weight: 500;
+}
+button#sign-up-button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  font-size: 20px;
+}

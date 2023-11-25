@@ -1,0 +1,261 @@
+<h1 class="section-header">
+    My Appointments
+</h1>
+
+
+<div class="WrapperCard">
+    <div class="text-right mb-3">
+        <select class="form-control d-inline-block" style="max-width: 110px;" [(ngModel)]="filters.status"
+            (change)="filter()">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover appointment-action-table table-bordered">
+            <thead>
+                <tr>
+                    <th class="start-at">Date</th>
+                    <th>Schedule Type</th>
+                    <th>Visit Type</th>
+                    <th>Status</th>
+                    <th class="action" style="min-width: 170px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr
+                    *ngFor="let event of data | paginate: { itemsPerPage: filters?.count, currentPage: filters?.page,  totalItems:filters?.total }">
+                    <td>
+                        <a class="text-primary viewlink" (click)="view(event)">{{event.startDate |
+                            date:'medium'}}</a>
+                    </td>
+
+                    <td>
+                        {{event.scheduleType | titlecase}}
+                    </td>
+
+                    <td>
+                        {{event.visitType | titlecase}}
+                    </td>
+
+                    <td class="text-capitalize">{{event.status | titlecase}}</td>
+
+
+                    <td class="actiontd">
+                        <button class="btn btn-primary" *ngIf="event?.status =='completed' && !event?.isReviewed"
+                            (click)="addReview(event)">Review</button>
+
+                        <button class="btn btn-primary" *ngIf="event?.status =='completed' && event?.isReviewed"
+                            (click)="viewReview(event)">View Review</button>
+                    </td>
+                </tr>
+                <tr *ngIf="filters?.total == 0">
+                    <th colspan="5" class="text-center">No Appointment</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="paginationWrapper text-right" *ngIf="filters.total>filters.count">
+        <pagination-controls (pageChange)="filters.page = $event;getData();"></pagination-controls>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal" [ngClass]="{'d-block': reviewModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Review</h4>
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label class="isRequired">Rating</label>
+                            <div>
+                                <article class="reviewArticle">
+                                    <label>Wait Time</label>
+                                    <div class="rate-area clearfix">
+                                        <ng-container *ngFor="let item of fiveStars">
+                                            <input type="radio" id="{{item}}-star-wait" formControlName="waitTime"
+                                                name="waitTime" value="{{item}}" />
+                                            <label for="{{item}}-star-wait"></label>
+                                        </ng-container>
+                                    </div>
+                                </article>
+                                <article class="reviewArticle">
+                                    <label>Manner</label>
+                                    <div class="rate-area clearfix">
+                                        <ng-container *ngFor="let item of fiveStars">
+                                            <input type="radio" id="{{item}}-star-manner" formControlName="manner"
+                                                name="manner" value="{{item}}" />
+                                            <label for="{{item}}-star-manner"></label>
+                                        </ng-container>
+
+                                    </div>
+                                </article>
+                                <article class="reviewArticle">
+                                    <label>Knowledgeable</label>
+                                    <div class="rate-area clearfix">
+                                        <ng-container *ngFor="let item of fiveStars">
+                                            <input type="radio" id="{{item}}-star-knowledge" formControlName="knowledge"
+                                                name="knowledge" value="{{item}}" />
+                                            <label for="{{item}}-star-knowledge"></label>
+                                        </ng-container>
+                                        <!-- <input type="radio" id="5-star" formControlName="knowledge" name="knowledge"
+                                            value="5" />
+                                        <label for="5-star" title="Amazing"></label>
+                                        <input type="radio" id="4-star" formControlName="knowledge" name="knowledge"
+                                            value="4" />
+                                        <label for="4-star" title="Good"></label>
+                                        <input type="radio" id="3-star" formControlName="knowledge" name="knowledge"
+                                            value="3" />
+                                        <label for="3-star" title="Average"></label>
+                                        <input type="radio" id="2-star" formControlName="knowledge" name="knowledge"
+                                            value="2" />
+                                        <label for="2-star" title="Not Good"></label>
+                                        <input type="radio" id="1-star" formControlName="knowledge" name="knowledge"
+                                            value="1" />
+                                        <label for="1-star" title="Bad"></label> -->
+                                    </div>
+                                </article>
+
+
+                                <div *ngIf="submitted && (f.waitTime.errors || f.manner.errors || f.knowledge.errors)"
+                                    class="invalid-feedback">
+                                    <div
+                                        *ngIf="f.waitTime.errors?.required || f.manner.errors?.required  || f.knowledge.errors?.required">
+                                        Rating is required</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <label class="isRequired">Review</label>
+                            <textarea id="review" name="review" formControlName="review" class="form-control" rows="4"
+                                cols="50"></textarea>
+                            <div *ngIf="submitted && f.review.errors" class="invalid-feedback">
+                                <div *ngIf="f.review.errors.required">Review is required</div>
+                                <div *ngIf="f.review.errors.pattern">Review is Invalid</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" [ngClass]="{'d-block': viewModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">View Appointment</h4>
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label>Date</label>
+                        <p class="text">{{viewData?.startDate |
+                            date:'medium'}}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Schedule Type</label>
+                        <p class="text">{{viewData?.scheduleType | titlecase}}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Visit Reason</label>
+                        <p class="text">{{viewData?.visitType}}</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Status</label>
+                        <p class="text">{{viewData?.status | titlecase}}</p>
+                    </div>
+                    <div class="col-md-12 mb-3" *ngIf="viewData?.description">
+                        <label>Description</label>
+                        <p class="text">{{viewData?.description}}</p>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" (click)="close()">Close</button>
+
+                <button class="btn btn-primary" *ngIf="viewData?.status =='completed' && !viewData?.isReviewed"
+                    (click)="addReview(viewData)">Review</button>
+
+                <button class="btn btn-primary" *ngIf="viewData?.status =='completed' && viewData?.isReviewed"
+                    (click)="viewReview(viewData)">View Review</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" [ngClass]="{'d-block': viewReviewModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">View Review</h4>
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label>Wait Time</label>
+                        <p class="text">{{reviewData?.waitTime}} Stars</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Manner</label>
+                        <p class="text">{{reviewData?.manner}} Stars</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label>Knowledgeable</label>
+                        <p class="text">{{reviewData?.knowledge}} Stars</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Rating</label>
+                        <p class="text">{{reviewData?.rating | number}} Stars</p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <label>Review</label>
+                        <p class="text">{{reviewData?.review}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" (click)="close()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

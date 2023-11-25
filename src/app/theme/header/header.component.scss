@@ -1,0 +1,124 @@
+@import "../../../assets/scss/mixin";
+
+.mainHeader{
+    position: relative;
+    z-index: 9999;
+.navbar-collapse{
+    .navbar-nav{
+        align-items:  center;
+        .nav-item{
+            .nav-link{
+                color: $textColor;
+                font-weight: 500;
+                cursor: pointer;
+
+                &.btn{
+                    min-width:100px;
+                    border-radius: 3px;
+                }
+            }
+        }
+    }
+}
+}
+
+.headerNavbar{
+    &.show{
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        left: 0;
+        top: 0;
+        background-color: #fff;
+        z-index: 1;
+
+        .closeBtn{
+            padding: 15px;
+            font-size: 25px;
+        }
+
+        .navbar-nav{
+            .nav-item{
+                text-align: center;
+                .nav-link{
+                    font-weight: 600 !important;
+                    font-size: 16px;
+
+                    &.btn{
+                        padding: 6px 10px !important;
+                    }
+                }
+
+                .nav-link.dropdown-toggle{
+                    margin: auto !important;
+                }
+            }
+        }
+    }
+}
+
+.headerLogo{
+    max-width: 100px;
+}
+
+.userDropdown{
+    > .nav-link{
+        background-color: transparent;
+        border: 0;
+        > img{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        &::after{
+            content: none;
+        }
+    }
+
+    .dropdown-menu{
+        left: initial !important;
+        right: 0 !important;
+
+        .dropdown-item{
+            > i{
+                margin-right: 7px;
+            }
+        }
+    }
+}
+
+.loginDropdown{
+
+    > .btn{
+        &::after{
+            content: none;
+        }
+    }
+    .dropdown-menu{
+        left: initial !important;
+        right: 0 !important;
+        padding: 0px 10px !important;
+
+        .dropdown-item{
+            background-color: #fff !important;
+            color: $textColor !important;
+            padding: 10px 0;
+
+            > b{
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            > a{
+                text-decoration: dotted;
+            }
+
+            &:not(:last-child){
+                border-bottom: 1px solid #dedede;
+            }
+        }
+    }
+}

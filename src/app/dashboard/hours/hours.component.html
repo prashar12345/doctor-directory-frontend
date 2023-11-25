@@ -1,0 +1,131 @@
+<h1 class="section-header">
+    My Hours of Operation
+</h1>
+
+
+<div class="WrapperCard">
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover appointment-action-table table-bordered">
+            <thead>
+                <tr>
+                    <th class="start-at">Address</th>
+                    <th class="action" style="min-width: 170px;">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr
+                    *ngFor="let event of data | paginate: { itemsPerPage: filters?.count, currentPage: filters?.page,  totalItems:filters?.total }">
+                    <td>
+                        <a class="text-secondary viewlink" (click)="view(event)">{{event?.address}}</a>
+                    </td>
+
+
+                    <td class="actiontd">
+                        <button class="btn btn-primary" title="Edit" (click)="edit(event)"><i class="fa fa-edit"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="paginationWrapper text-right" *ngIf="filters.total>filters.count">
+        <pagination-controls (pageChange)="filters.page = $event;getData();"></pagination-controls>
+    </div>
+</div>
+
+
+<div class="modal" [ngClass]="{'d-block': editModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Edit</h4>
+                <button type="button" class="close" aria-label="Close" (click)="editModal = false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label>Address</label>
+                        <p class="text">{{viewData?.address}}</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <article class="hoursBox">
+                            <section *ngFor="let item of days;let i = index">
+                                <label>{{item.day}}:</label>
+                                <div>
+                                    <input type="time" *ngIf="item.isOpen" [(ngModel)]="item.start">
+                                    <p class="text" *ngIf="!item.isOpen">--</p>
+                                    <span>-</span>
+                                    <input type="time" *ngIf="item.isOpen" [(ngModel)]="item.end">
+                                    <p class="text" *ngIf="!item.isOpen">--</p>
+                                    <label class="btn" [ngClass]="{'btn-success': !item.isOpen, 'btn-danger':item.isOpen}">
+                                        {{item.isOpen?'close':'Open'}}
+                                        <input type="checkbox" class="d-none" name="isOpen" (change)="isOpen(i)" [(ngModel)]="item.isOpen" />
+                                    </label>
+                                </div>
+                            </section>
+                            
+                        </article>
+                    </div>
+                
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="editModal = false">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" [ngClass]="{'d-block': viewModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">View</h4>
+                <button type="button" class="close" aria-label="Close" (click)="viewModal = false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label>Address</label>
+                        <p class="text">{{viewData?.address}}</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <article class="hoursBox">
+                            <section *ngFor="let item of days;let i = index">
+                                <label>{{item.day}}:</label>
+                                <div>
+                                    <p class="text" *ngIf="!item.isOpen">{{item.end?item.start:'--'}}</p>
+                                    <span>-</span>
+                                    <p class="text">{{item.end?item.end:'--'}}</p>
+                                    <label class="btn" [ngClass]="{'btn-success': !item.isOpen, 'btn-danger':item.isOpen}">
+                                        {{item.isOpen?'closed':'Opened'}}
+                                        <!-- <input type="checkbox" class="d-none" name="isOpen" (change)="isOpen(i)" [(ngModel)]="item.isOpen" /> -->
+                                    </label>
+                                </div>
+                            </section>
+                            
+                        </article>
+                    </div>
+                
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="viewModal = false">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

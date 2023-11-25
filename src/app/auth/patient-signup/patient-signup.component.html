@@ -1,0 +1,161 @@
+<ngx-spinner bdColor="#fff" size="" color="#fff">
+  <img src="assets/img/loader.gif" class="loaderLogo" width="100" />
+</ngx-spinner>
+
+<main class="sign-up">
+  <div class="container">
+    <div class="sign-up__content">
+      
+
+        <h1 class="sign-up__title" *ngIf="!doctorId">
+          Create an account
+        </h1>
+        <div class="form__row sign-up__sign" *ngIf="!doctorId">
+          Already have an account? &nbsp;<a class="link" routerLink="/auth/login/patient">Log in.</a>
+        </div>
+
+        <h1 class="sign-up__title" *ngIf="doctorId">
+          Tell us a bit about you.
+        </h1>
+        <p *ngIf="doctorId">To book your appointment, we need to verify a few things for Dr. {{data?.fullName}}'s office.</p>
+      
+      <form class="sign-up__form form" autocomplete="off" [formGroup]="Form" (ngSubmit)="onSubmit()">
+        <div class="row m-0">
+            <div class="col-md-12 px-0 mb-3">
+                <b class="isRequired">Your Name</b>
+            </div>
+          <div class="col-md-6 px-0 mb-3">
+              <div class="input__container">
+              <input class="form-control" id="firstName" placeholder="First" formControlName="firstName"
+                maxlength="20" required="" type="text" />
+              </div>
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+              <div *ngIf="f.firstName.errors.required">First Name is required</div>
+              <div *ngIf="f.firstName.errors.pattern">First Name is invalid</div>
+            </div>
+          </div>
+          <div class="col-md-6 px-0 mb-3">
+            <div class="input__container">
+              <input class="form-control" id="lastName" placeholder="Last" formControlName="lastName" type="text"
+                required="" />
+              <!-- <label class="input__label" for="lastName">Last Name</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+              <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+              <div *ngIf="f.lastName.errors.pattern">Last Name is invalid</div>
+            </div>
+          </div>
+        
+          <div class="col-md-12 px-0 mb-3">
+            <b class="isRequired">Enter Your Phone And Email</b>
+          </div>
+          <div class="col-md-6 px-0 mb-3">
+            <div class="input__container">
+              <input class="form-control" id="Phone" placeholder="Phone" maxlength="12"
+                oninput="javascript: isNumber(this);"
+                formControlName="mobileNo" type="text" required="" />
+              <!-- <label class="input__label" for="Phone">Phone</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.mobileNo.errors" class="invalid-feedback">
+              <div *ngIf="f.mobileNo.errors.required">Phone is required</div>
+              <div *ngIf="f.mobileNo.errors.min">Minimum 10 digits required</div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6 px-0 mb-3">
+            <div class="input__container">
+              <input class="form-control" id="email" placeholder="Email" formControlName="email" type="text"
+                required="" />
+              <!-- <label class="input__label" for="email">Email</label> -->
+            </div>
+
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email || f.email.errors.pattern">Please Enter Valid Email</div>
+            </div>
+          </div>
+
+          <div class="col-md-12 mb-3 px-0">
+            <b class="isRequired">Gender</b> 
+            <select formControlName="gender" id="Gender" required="" class="form-control">
+              <option selected disabled value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <!-- <article class="form-row m-0">
+              
+              <div class="col-6 px-0">
+                <div class="input__container form-control">
+                    <input type="radio" id="Male" name="gender" formControlName="gender" value="male">
+                      <label for="Male">Male</label>
+                </div>
+              </div>
+
+              <div class="col-6 px-0">
+                <div class="input__container form-control">
+                    <input type="radio" id="Female"  formControlName="gender" name="gender" value="female">
+                      <label for="Female">Female</label>
+                </div>
+              </div>
+            </article> -->
+
+            <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+              <div *ngIf="f.gender.errors.required">Gender is required</div>
+            </div>
+          </div>
+          
+        
+    
+          <div class="col-md-6 px-0 mb-3">
+            <b class="isRequired">Password</b>
+            <div class="input__container">
+              <input class="form-control" id="password" maxlength="20" placeholder="Password" required="" type="password"
+                formControlName="password" />
+            </div>
+
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Minimum Length 9 is required</div>
+            </div>
+          </div>
+         
+          <div class="col-md-6 px-0 mb-3">
+            <b class="isRequired">Confirm Your Password</b>
+            <div class="input__container">
+              <input class="form-control" id="confirmPassword" required="" maxlength="20" placeholder="Confirm Password"
+                type="password" formControlName="confirmPassword" />
+         
+            </div>
+
+            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+              <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+              <div *ngIf="f.confirmPassword.errors.confirmMatch">Confirm password must match with password</div>
+              <div *ngIf="f.confirmPassword.errors.minlength">Minimum Length 9 is required</div>
+            </div>
+          </div>
+      
+          </div>
+
+       
+
+
+          <label class="agreelable isRequired">
+            <input type="checkbox" formControlName="agree" />
+            I agree with <a routerLink="/page/terms" class="primary">Terms of Use</a> and <a routerLink="/page/privacy" class="primary">Privacy Policy</a>
+          </label>
+
+          <div *ngIf="submitted && !Form.value.agree" class="invalid-feedback">
+            Agreement is Required
+          </div>
+          <div class="w-100">
+            <button class="btn btn-primary" id="sign-up-button" tabindex="0">Sign up</button>
+          </div>
+     
+       
+      </form>
+    </div>
+  </div>
+</main>
